@@ -15,7 +15,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatIconModule     
   ],
   templateUrl: './project-card.component.html', 
-  styleUrls: ['./project-card.component.scss']
+  styleUrls: ['./project-card.component.scss'],
+  
 })
 export class ProjectCardComponent {
   @Input() project!: Project;

@@ -1,39 +1,121 @@
+/* --- Global Resets and Base Styles --- */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%; /* Crucial for min-height: 100vh on body */
+  box-sizing: border-box; /* Include padding/border in element's total width/height */
+}
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
-
-
-/* Add some basic reset or box-sizing */
 *, *::before, *::after {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: inherit; /* Inherit box-sizing */
+  // Removed default margin/padding reset here, let components manage spacing,
+  // or apply resets more specifically if needed.
+}
+
+/* --- Theme Variables --- */
+:root {
+  --primary-color: #007bff; /* Example Blue */
+  --primary-color-dark: #0056b3;
+  --secondary-color: #28a745; /* Example Green */
+  --background-color: #f8f9fa; // Light background
+  --text-color: #343a40; // Dark grey text
+  --text-color-light: #6c757d; // Lighter grey text
+  --card-background: #ffffff; // White background for cards/boxes
+  --border-color: #dee2e6; // Light border
+  --hover-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Define shadows as variables too
+  --base-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --gap-sm: 8px;
+  --gap-md: 20px;
+  --gap-lg: 40px;
+}
+
+/* Optional: SCSS variables for functions like darken */
+$primary-color-scss: #007bff;
+
+
+/* --- Body and Layout --- */
+body {
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  line-height: 1.6;
+  color: var(--text-color); /* Use CSS variable */
+  background-color: var(--background-color); /* Use CSS variable */
+
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Body takes at least full viewport height */
+}
+
+main {
+  flex-grow: 1; /* Main content takes available space, pushing footer down */
+  // Padding will be handled by .section-padding or component styles
+  // padding: var(--gap-md, 20px); /* Example using variable */
+
+  /* Optional: Add padding bottom to main so content doesn't touch footer IF footer is fixed height */
+  /* If footer height varies, rely on margin-top on footer or padding-bottom on the last section */
+  // padding-bottom: 60px; /* Example */
+}
+
+footer {
+  flex-shrink: 0; /* Prevent footer from shrinking */
+  // margin-top: auto; /* Optional: Pushes footer to the end in flex column */
+  background-color: var(--text-color); /* Example: dark background */
+  color: var(--background-color); /* Example: light text */
+  padding: var(--gap-md, 20px);
+  text-align: center;
+
+  .footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
   }
-  
-  body {
-    font-family: Roboto, "Helvetica Neue", sans-serif; /* Material font */
-    line-height: 1.6;
-    color: #333; // Default text color
-    background-color: #f4f4f4; // Light background
+
+  p {
+    margin-bottom: var(--gap-sm, 8px);
+    font-size: 0.9em;
   }
-  
-  main {
-    padding: 20px; /* Add some padding around the main content */
-    min-height: calc(100vh - (height of header + height of footer)); /* Adjust to ensure footer is at bottom on short content */
-    /* You'll need to calculate header/footer height or use flexbox/grid for layout */
-  }
-  
-  /* Basic link styling */
-  a {
+
+  .social-links a {
+    color: var(--background-color); /* Light link color */
     text-decoration: none;
-    color: #007bff; // Example link color
+    margin: 0 10px;
+    transition: color 0.3s ease;
+
     &:hover {
+      color: var(--primary-color); /* Highlight on hover */
       text-decoration: underline;
     }
   }
-  
-  /* Add a class for section padding */
-  .section-padding {
-    padding: 40px 20px;
+}
+
+
+/* --- Typography --- */
+h1, h2, h3, h4 {
+  // Use a mix of CSS variables and SCSS functions if needed
+  color: var(--primary-color-dark); // Use CSS variable
+  // Or if you need darken: color: darken($primary-color-scss, 15%);
+  margin-bottom: 0.5em;
+  line-height: 1.2;
+}
+
+p {
+  margin-bottom: 1em;
+}
+
+/* --- Utility/Layout Classes --- */
+.section-padding {
+  padding: var(--gap-lg, 40px) var(--gap-md, 20px); /* Use padding variables */
+}
+
+
+/* --- Ensure route components are block elements for layout --- */
+app-home, app-about, app-skills, app-projects, app-contact {
+   display: block;
+}
+
+/* Basic link styling for general links not in footer */
+a {
+  text-decoration: none;
+  color: var(--primary-color); /* Use primary color for links */
+  &:hover {
+    text-decoration: underline;
   }
-  
+}

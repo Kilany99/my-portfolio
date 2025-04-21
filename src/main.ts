@@ -7,8 +7,8 @@ import { routes } from './app/app.routes';
 
 bootstrapApplication(AppComponent, {
   providers: [
-    provideRouter(routes), // Provide routing using the routes array
-    provideAnimations() // Provide browser animations for Material
+    provideRouter(routes), 
+    provideAnimations() 
    
   ]
 }).catch(err => console.error(err));

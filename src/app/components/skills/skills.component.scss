@@ -1,0 +1,70 @@
+@import '../../../styles.scss'; 
+
+.skills-grid-container {
+  display: grid;
+  gap: var(--gap-md); /* Use gap variable */
+
+  /* Default for mobile: single column */
+  grid-template-columns: 1fr;
+
+  /* Adjust for larger screens */
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  }
+
+  @media (min-width: 900px) {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  align-items: start;
+}
+
+.skill-category-box {
+  background-color: var(--card-background); // Use card background variable
+  border: 1px solid var(--border-color); // Use border color variable
+  border-radius: 8px;
+  padding: var(--gap-md); /* Use padding variable */
+  box-shadow: var(--base-shadow); // Use shadow variable
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow); // Use hover shadow variable
+  }
+
+  h3 {
+    // Use CSS variable, or SCSS variable + darken function if needed
+    color: var(--primary-color); // Use primary color for title
+    margin-top: 0;
+    margin-bottom: var(--gap-sm); /* Use gap variable */
+    // If using darken, ensure $primary-color-scss is defined and imported
+    border-bottom: 2px solid var(--primary-color-dark); // Use dark primary for border
+    padding-bottom: var(--gap-sm);
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--gap-sm); /* Use gap variable */
+  }
+
+  li {
+    background-color: var(--background-color); // Use background variable for list item background
+    color: var(--text-color-light); // Use light text color variable
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    border: 1px solid var(--border-color); // Use border color variable
+  }
+  li:hover {
+    background-color: var(--primary-color); // Change background on hover
+    color: var(--background-color); // Change text color on hover
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow); // Use hover shadow variable
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer; // Change cursor to pointer on hover
+  }
+}

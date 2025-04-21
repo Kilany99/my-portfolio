@@ -1,32 +1,74 @@
+@import '../../../styles.scss'; 
+
 .project-card {
-    max-width: 400px; 
-    margin: auto; // Center the card
-    display: flex; // Use flexbox for layout within the card
-    flex-direction: column;
-    mat-card-content {
-      flex-grow: 1; // Allow content to take up space
+  max-width: 400px;
+  margin: var(--gap-md) auto; 
+  display: flex;
+  flex-direction: column;
+  background-color: var(--card-background); // Use card background variable
+  border: 1px solid var(--border-color); // Use border color variable
+  border-radius: 8px;
+  box-shadow: var(--base-shadow); // Use shadow variable
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--hover-shadow); // Use hover shadow variable
+  }
+
+  mat-card-content { 
+    flex-grow: 1;
+    padding: var(--gap-md); /* Use padding variable */
+  }
+
+  img {
+     height: 200px;
+     object-fit: cover;
+
+  }
+
+  .technologies {
+     margin-top: var(--gap-sm); 
+
+     h4 {
+        margin-bottom: var(--gap-sm); /* Use gap variable */
+     }
+
+     ul {
+       list-style: none;
+       padding: 0;
+       margin: 0; // Remove default ul margin
+       display: flex;
+       flex-wrap: wrap;
+       gap: var(--gap-sm); // Use gap variable
+     }
+
+     li {
+       background-color: var(--background-color); // Light background from global styles
+       color: var(--text-color-light); // Lighter text color from global styles
+       padding: 3px 8px;
+       border-radius: 4px;
+       font-size: 0.9em;
+       border: 1px solid var(--border-color); // Use border color variable
+     }
+     li:hover {
+       background-color: var(--primary-color); // Change background on hover
+       transform: translateY(-5px);
+       box-shadow: var(--hover-shadow); // Use hover shadow variable
+     
+     }
+  }
+
+  mat-card-actions { 
+    padding: var(--gap-sm); // Use padding variable
+    border-top: 1px solid var(--border-color); // Add border for separation
+    a { 
+        color: var(--primary-color); // Use primary color for action links/buttons
+        
     }
-    img {
-       height: 200px;
-       object-fit: cover; 
-    }
-    .technologies {
-       margin-top: 15px;
-       h4 {
-          margin-bottom: 5px;
-       }
-       ul {
-          list-style: none;
-          padding: 0;
-          display: flex;
-          flex-wrap: wrap;
-          gap: 8px; 
-          li {
-             background-color: #e0e0e0; // Light grey background
-             padding: 3px 8px;
-             border-radius: 4px;
-             font-size: 0.9em;
-           }
-       }
+    a:hover {
+         text-decoration: underline; // Underline on hover
+         color: var(--hover-shadow); // Darker primary color on hover 
     }
   }
+}

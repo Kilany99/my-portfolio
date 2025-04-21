@@ -1,0 +1,31 @@
+@import '../../../styles.scss'; 
+
+footer {
+  background-color: #3f51b5; // Material Design color 
+  color: var(--background-color, #f8f9fa); 
+  padding: 20px;
+  text-align: center;
+  margin-top: 40px; 
+
+  .footer-content {
+    max-width: 1200px; 
+    margin: 0 auto;
+  }
+
+  p {
+    margin-bottom: 10px;
+    font-size: 0.9em;
+  }
+
+  .social-links a {
+    color: var(--background-color, #f8f9fa); 
+    text-decoration: none;
+    margin: 0 10px;
+    transition: color 0.3s ease; 
+
+    &:hover {
+      color: var(--primary-color, #007bff); 
+      text-decoration: underline;
+    }
+  }
+}
