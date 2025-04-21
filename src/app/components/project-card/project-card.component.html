@@ -1,0 +1,16 @@
+<mat-card class="project-card"> <img mat-card-image *ngIf="project.imageUrl" [src]="project.imageUrl" [alt]="project.name + ' Screenshot'">
+    <mat-card-content>
+      <h3>{{ project.name }}</h3>
+      <p>{{ project.description }}</p>
+      <div class="technologies">
+        <h4>Technologies Used:</h4>
+        <ul>
+          <li *ngFor="let tech of project.technologies">{{ tech }}</li>
+        </ul>
+      </div>
+    </mat-card-content>
+    <mat-card-actions>
+      <a *ngIf="project.liveDemoUrl" mat-button [href]="project.liveDemoUrl" target="_blank">Live Demo</a>
+      <a *ngIf="project.githubUrl" mat-button [href]="project.githubUrl" target="_blank">GitHub Repo</a>
+    </mat-card-actions>
+  </mat-card>

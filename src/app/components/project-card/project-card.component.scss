@@ -1,0 +1,32 @@
+.project-card {
+    max-width: 400px; 
+    margin: auto; // Center the card
+    display: flex; // Use flexbox for layout within the card
+    flex-direction: column;
+    mat-card-content {
+      flex-grow: 1; // Allow content to take up space
+    }
+    img {
+       height: 200px;
+       object-fit: cover; 
+    }
+    .technologies {
+       margin-top: 15px;
+       h4 {
+          margin-bottom: 5px;
+       }
+       ul {
+          list-style: none;
+          padding: 0;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px; 
+          li {
+             background-color: #e0e0e0; // Light grey background
+             padding: 3px 8px;
+             border-radius: 4px;
+             font-size: 0.9em;
+           }
+       }
+    }
+  }

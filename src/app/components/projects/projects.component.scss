@@ -1,0 +1,10 @@
+.projects-list-container {
+    display: grid;
+    gap: 20px; // Space between cards
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); // Responsive grid
+  }
+  @media (max-width: 768px) {
+    .projects-list-container {
+       grid-template-columns: 1fr; // Single column on tablets/phones
+    }
+  }

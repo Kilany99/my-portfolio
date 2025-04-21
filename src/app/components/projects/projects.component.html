@@ -1,0 +1,10 @@
+<section class="section-padding">
+  <h2>My Projects</h2>
+  <div class="projects-list-container">
+    <app-project-card
+      *ngFor="let project of projects"
+      [project]="project"> </app-project-card>
+
+    <p *ngIf="projects.length === 0">No projects to display yet.</p>
+  </div>
+</section>
