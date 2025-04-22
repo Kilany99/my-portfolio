@@ -4,6 +4,7 @@ html, body {
   padding: 0;
   height: 100%; /* Crucial for min-height: 100vh on body */
   box-sizing: border-box; /* Include padding/border in element's total width/height */
+  scroll-behavior: smooth;
 }
 
 *, *::before, *::after {
@@ -43,14 +44,22 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh; /* Body takes at least full viewport height */
+
+   // background-image: url('/assets/images/background-texture.png'); /* Example image */
+  // background-repeat: repeat; /* Or no-repeat, repeat-x, repeat-y */
+  // background-size: cover; /* Or contain, auto */
+  // background-position: center center; /* Or top, bottom, 50% 50% */
+  // background-attachment: fixed; /* Optional: makes background scroll with page */
+
 }
 
 main {
   flex-grow: 1; /* Main content takes available space, pushing footer down */
+  padding-top: 60px; // Add padding equal to header height
+  padding-bottom: var(--gap-lg, 40px); 
   // Padding will be handled by .section-padding or component styles
-  // padding: var(--gap-md, 20px); /* Example using variable */
+  
 
-  /* Optional: Add padding bottom to main so content doesn't touch footer IF footer is fixed height */
   /* If footer height varies, rely on margin-top on footer or padding-bottom on the last section */
   // padding-bottom: 60px; /* Example */
 }
@@ -103,6 +112,8 @@ p {
 /* --- Utility/Layout Classes --- */
 .section-padding {
   padding: var(--gap-lg, 40px) var(--gap-md, 20px); /* Use padding variables */
+  padding-top: calc(var(--gap-lg, 40px) + 60px); /* Add header height  top padding */
+
 }
 
 

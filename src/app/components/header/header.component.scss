@@ -2,6 +2,11 @@ header {
     background-color: #3f51b5; // Material Design color
     color: white;
     padding: 10px 20px;
+    position: sticky; /* Makes the header stick to the top */
+    top: 0; /* Stick to the very top of the viewport */
+    z-index: 10; /* Ensure it stays above other content */
+    background-color: var(--text-color, #343a40); /* Ensure it has a solid background */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); // Add shadow for depth
     nav ul {
       list-style: none;
       display: flex;
