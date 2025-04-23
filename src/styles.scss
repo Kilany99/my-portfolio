@@ -2,64 +2,63 @@
 html, body {
   margin: 0;
   padding: 0;
-  height: 100%; /* Crucial for min-height: 100vh on body */
-  box-sizing: border-box; /* Include padding/border in element's total width/height */
+  height: 100%;
+  box-sizing: border-box;
   scroll-behavior: smooth;
 }
 
 *, *::before, *::after {
-  box-sizing: inherit; /* Inherit box-sizing */
- 
+  box-sizing: inherit;
 }
 
-/* --- Theme Variables --- */
+/* --- Theme Variables (Theme 1: Modern & Clean Tech) --- */
 :root {
-  --primary-color: #007bff; /* Example Blue */
-  --primary-color-dark: #0056b3;
-  --secondary-color: #28a745; /* Example Green */
-  --background-color: #f8f9fa; // Light background
-  --text-color: #343a40; // Dark grey text
-  --text-color-light: #6c757d; // Lighter grey text
-  --card-background: #ffffff; // White background for cards/boxes
-  --border-color: #dee2e6; // Light border
-  --hover-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); // Define shadows as variables too
+  --primary-color: #007BFF;     /* Vibrant Blue */
+  --primary-color-dark: #0056b3; /* Darker Blue */
+  --secondary-color: #00C4CC;   /* Bright Teal/Aqua */
+  --background-color: #F4F7F6; /* Very light grey/white */
+  --alternate-background: #E9ECEF; /* Slightly darker grey */
+  --text-color: #343A40;       /* Dark charcoal */
+  --text-color-light: #6C757D;   /* Medium grey */
+  --card-background: #FFFFFF;   /* Pure White */
+  --border-color: #DEE2E6;     /* Light grey */
+  --hover-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   --base-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   --gap-sm: 8px;
   --gap-md: 20px;
   --gap-lg: 40px;
-  --header-height: 60px;
+  --header-height: 60px; /* Your header's actual height */
+
+  // Optional: Define overlay colors as variables
+  --overlay-dark: rgba(0, 0, 0, 0.5); // 50% opaque black
+  --overlay-light: rgba(255, 255, 255, 0.5); // 50% opaque white
 }
 
-$primary-color-scss: #007bff;
+/* Optional: SCSS variables for functions like darken (if needed) */
+$primary-color-scss: #007BFF;
 
 
 /* --- Body and Layout --- */
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   line-height: 1.6;
-  color: var(--text-color); 
-  background-color: var(--background-color); 
-
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Body takes at least full viewport height */
-
-   // background-image: url('/assets/images/background-texture.png'); /* Example image */
-  // background-repeat: repeat; /* Or no-repeat, repeat-x, repeat-y */
-  // background-size: cover; /* Or contain, auto */
-  // background-position: center center; /* Or top, bottom, 50% 50% */
-  // background-attachment: fixed; /* Optional: makes background scroll with page */
-
+  color: var(--text-color);
+  background-color: var(--background-color); // Default background
+  min-height: 100vh;
+  
+  // background-image: url('/assets/images/global-bg-texture.png');
+  // background-repeat: repeat;
 }
 
 main {
-  flex-grow: 1; /* Main content takes available space, pushing footer down */
+  flex-grow: 1;
+  // No padding-top/bottom on main
 }
 
 footer {
-  flex-shrink: 0; /* Prevent footer from shrinking */
-  background-color: var(--text-color); /* Example: dark background */
-  color: var(--background-color); /* Example: light text */
+  flex-shrink: 0;
+  background-color: var(--text-color); /* Dark background */
+  color: var(--background-color); /* Light text */
   padding: var(--gap-md, 20px);
   text-align: center;
 
@@ -86,10 +85,9 @@ footer {
   }
 }
 
-
 /* --- Typography --- */
 h1, h2, h3, h4 {
-  color: var(--primary-color-dark); 
+  color: var(--primary-color-dark);
   margin-bottom: 0.5em;
   line-height: 1.2;
 }
@@ -100,17 +98,19 @@ p {
 
 /* --- Utility/Layout Classes --- */
 .section-padding {
-  padding: var(--gap-lg, 40px) var(--gap-md, 20px); 
-  scroll-margin-top: var(--header-height);
+  padding: var(--gap-lg, 40px) var(--gap-md, 20px);
+  scroll-margin-top: var(--header-height); // Fix sticky header overlap
   min-height: 100vh;
- // display: flex; 
+    display: flex;
   flex-direction: column;
-  justify-content: center; // Centers content along the main axis (vertically in a column)
-  align-items: center; // Centers content along the cross axis (horizontally in a column)
-  text-align: center; // Center text blocks
+  // Centering is often desired in full-height sections, but can be overridden per component
+   justify-content: center;
+   align-items: center;
+   text-align: center;
 
+  position: relative; // Needed for pseudo-elements
+  overflow: hidden; // Hide overflowing background parts
 }
-
 
 /* --- Ensure route components are block elements for layout --- */
 app-home, app-about, app-skills, app-projects, app-contact {
@@ -120,8 +120,25 @@ app-home, app-about, app-skills, app-projects, app-contact {
 /* Basic link styling for general links not in footer */
 a {
   text-decoration: none;
-  color: var(--primary-color); /* Use primary color for links */
+  color: var(--primary-color);
   &:hover {
     text-decoration: underline;
   }
+}
+button{
+  padding: 10px 20px;
+  margin: auto;
+  border-radius: 19px;
+  background-color: transparent;
+  color: #FFFFFF;
+}
+button:hover{
+  background-color: var(--primary-color);
+  color: var(--background-color);
+  cursor: pointer;
+  transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, -5px, 1);
+  transition: all 0.3s ease;
+  box-shadow: var(--hover-shadow);
+  transform: translateY(-5px);
+  
 }

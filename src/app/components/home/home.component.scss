@@ -1,22 +1,68 @@
-section {
-    padding: 80px 20px;
-    text-align: center;
-    h1 {
-      color: #3f51b5; // Material Design color
-      margin-bottom: 10px;
-    }
-    p {
-      margin-bottom: 20px;
-    }
+@import '../../../styles.scss'; // Import global styles for variables
+
+:host {
+   display: block;
+  min-height: 100vh; 
+  background-image: url(/images/web-developer-portfolio.webp); 
+
+  background-size: cover; 
+  background-position: center; 
+  background-repeat: no-repeat; 
+
+}
+
+// Styles for the inner .section-padding div
+.section-padding {
+  /* --- Home Section Specific Background --- */
+  background-image: url('/assets/images/home-hero-bg.jpg'); /* <--- YOUR HERO IMAGE HERE */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: var(--background-color); // Text color changes to light for dark background
+
+  /* --- Dark Overlay for Readability --- */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: var(--overlay-dark); // Use the dark overlay variable
+    z-index: -1; // Place behind content
   }
-  @media (max-width: 600px) {
-    header {
-      nav ul {
-        flex-direction: column; // Stack links vertically on small screens
-        gap: 10px;
-      }
-    }
-  }
-  .section-padding {
-    display: flex; 
+  /* ----------------------------------- */
+
+
+  /* --- Optional: Center Content if not done in global .section-padding --- */
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  /* ------------------------------------------------------------------- */
+}
+
+// Styles for elements *inside* the Home section
+h1 {
+    color: var(--secondary-color); // Highlight heading with accent color
+    // Inherits margin-bottom, line-height from global styles
+}
+
+p {
+    color: var(--background-color); // Ensure paragraphs are also light
+}
+
+button {
+    margin-top: var(--gap-md);
+    // Material button colors are handled by Material's theming or component inputs
+}
+/* --- Styles for the Video Background Element --- */
+.background-video {
+  position: absolute; // Position relative to the .section-padding parent
+  top: 50%; // Center the video
+  left: 50%; // Center the video
+  min-width: 100%; // Ensure it covers at least the width
+  min-height: 100%; // Ensure it covers at least the height
+  width: auto; // Maintain aspect ratio
+  height: auto; // Maintain aspect ratio
+  transform: translate(-50%, -50%); // Adjust position after centering to truly center
+  z-index: -1; // Place the video BEHIND the content overlay
+
+   filter: brightness(0.8) grayscale(0.2); // Example filters
 }

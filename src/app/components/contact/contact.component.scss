@@ -1,3 +1,100 @@
+@import '../../../styles.scss'; // Import global styles for variables
+
+:host {
+   display: block;
+   min-height: 100vh; 
+}
+
+// Styles for the inner .section-padding div
 .section-padding {
-    display: flex; 
+  // Inherits padding, min-height, scroll-margin-top from styles.scss
+
+  /* --- Contact Section Specific Background --- */
+  background-color: var(--background-color); // Use the main background color
+  /* ----------------------------------------- */
+
+  color: var(--text-color); // Use standard text color
+  text-align: center; // Center title and content
+  justify-content: flex-start; // Align content to the top (title, then form)
+  align-items: center; // Center horizontally
+}
+
+h2 {
+  color: var(--primary-color-dark); // Use dark primary for title
+  margin-bottom: var(--gap-lg); // Add space below title
+  // Inherits other styles from global
+}
+
+p {
+   color: var(--text-color); // Ensure paragraphs are dark
+   // Inherits margin-bottom from global
+}
+
+/* --- Layout and Styling for Contact Form --- */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md); // Space between form groups
+  width: 100%; // Take full width
+  max-width: 600px; // Limit form width
+  margin: 0 auto var(--gap-lg) auto; // Center form and add space below
+
+  div { // Form group container
+    display: flex;
+    flex-direction: column;
+    gap: var(--gap-sm); // Space between label and input
+  }
+
+  label {
+    font-weight: bold;
+    color: var(--text-color);
+  }
+
+  input[type="text"],
+  input[type="email"],
+  textarea {
+    padding: var(--gap-sm);
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 1em;
+    color: var(--text-color);
+    background-color: var(--card-background); // Light background for inputs
+  }
+
+  textarea {
+    resize: vertical; // Allow vertical resizing
+  }
+
+  button[type="submit"] {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1.1em;
+    transition: background-color 0.3s ease;
+    &:hover {
+      background-color: var(--primary-color-dark);
+    }
+    margin-top: var(--gap-sm); // Space above button if needed
+  }
+}
+
+.social-links {
+   display: flex;
+   flex-direction: column;
+   align-items: center;
+   gap: var(--gap-sm); // Space between social links paragraph and links
+
+   p {
+     margin-bottom: 0; // Remove default paragraph margin
+   }
+
+   a {
+     // Social link styles are mostly inherited from global a and footer styles if inside footer
+     // If styling links outside the footer, add specific styles here
+      margin: 0 10px; // Add horizontal space between icons/text links
+   }
+
 }

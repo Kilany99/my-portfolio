@@ -1,21 +1,56 @@
-header {
-    background-color: #3f51b5; // Material Design color
-    color: white;
-    padding: 10px 20px;
-    position: sticky; /* Makes the header stick to the top */
-    top: 0; /* Stick to the very top of the viewport */
-    z-index: 10; /* Ensure it stays above other content */
-    background-color: var(--text-color, #343a40); /* Ensure it has a solid background */
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2); // Add shadow for depth
-    nav ul {
-      list-style: none;
-      display: flex;
-      gap: 20px; // Space out links
-    }
-    nav a {
-      color: white;
+@import '../../../styles.scss'; // Import global styles for variables
+
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 10; // Ensure it stays above other content
+  height: var(--header-height); // Ensure height matches variable
+  display: flex;
+  align-items: center;
+  padding: 0 var(--gap-md);
+
+  background-color: var(--primary-color) ;
+
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
+  color: var(--background-color); 
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease; // Smooth transitions
+  /* ------------------------------------------------------------ */
+}
+
+// --- Styles when Header is Solid (on Home Section - when .is-solid class is present) ---
+:host.is-solid { 
+   background-color: var(--primary-color-dark); // Darker background for solid state
+
+   box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Stronger shadow */
+   color: var(--background-color); // Light text color for solid dark bg
+}
+/* ----------------------------------------------- */
+
+// Styles for elements *inside* the header (nav, ul, a)
+nav ul {
+   list-style: none;
+   display: flex;
+   gap: var(--gap-md);
+
+   a {
+      color: inherit; // Links inherit color from the host element's color property
+      text-decoration: none;
+      transition: color 0.3s ease;
+
       &:hover {
-        text-decoration: underline;
+         color: var(--primary-color); // Highlight on hover
+         text-decoration: underline;
       }
-    }
-  }
+   }
+}
+
+// // Media query for responsive header (if needed)
+// @media (max-width: 600px) {
+//   :host {
+//     // Adjust header styles for small screens
+//   }
+//   nav ul {
+//     // Adjust navigation layout
+//   }
+// }

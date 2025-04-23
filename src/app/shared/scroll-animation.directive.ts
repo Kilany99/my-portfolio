@@ -97,12 +97,6 @@ export class ScrollAnimationDirective implements AfterViewInit, OnDestroy {
      this.renderer.setStyle(this.el.nativeElement, 'opacity', '0');
      this.renderer.setStyle(this.el.nativeElement, 'transform', `translateY(${this.fromY})`);
 
-     // Optional: Force browser reflow. Sometimes helps ensure styles are applied
-     // before transitions are re-enabled.
-     // this.el.nativeElement.offsetHeight; // Do NOT assign result
-
-     // Re-enable transitions. This ensures subsequent animations controlled by AnimationBuilder
-     // or other CSS transitions can work. Setting to null removes the style property.
      this.renderer.setStyle(this.el.nativeElement, 'transition', null);
   }
 

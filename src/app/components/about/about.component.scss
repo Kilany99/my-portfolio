@@ -1,27 +1,71 @@
+@import '../../../styles.scss'; // Import global styles for variables
+
+:host {
+   display: block;
+   min-height: 100vh; 
+
+}
+
+// Styles for the inner .section-padding div
+.section-padding {
+  // Inherits padding, min-height, scroll-margin-top from styles.scss
+  display: flex;
+
+  /* --- About Section Specific Background --- */
+  background-color: var(--alternate-background); // Use the alternate background color
+  // Optional: Add a subtle texture image
+  // background-image: url('/assets/images/about-texture.png');
+  // background-repeat: repeat;
+  /* --------------------------------------- */
+
+  color: var(--text-color); // Use standard text color (dark)
+  text-align: left; // Align text left for readability of bio
+  justify-content: flex-start; // Align content to the top by default
+  align-items: center; // Center horizontally if using flex column
+}
+
+/* --- Layout for Content Inside About Section --- */
 .about-content {
     display: flex; /* Example layout for image and text */
-    flex-direction: column;
-    align-items: center;
-    gap: var(--gap-md); /* Space between image and text */
-  
+    flex-direction: column; // Stack image and text vertically by default
+    align-items: center; // Center items horizontally in column
+    gap: var(--gap-lg); /* Space between image/text and h2/p blocks */
+    max-width: 800px; // Limit content width for readability
+    margin: 0 auto; // Center the content block
+
     @media (min-width: 768px) {
       flex-direction: row; /* Image and text side-by-side on larger screens */
-      align-items: flex-start;
+      align-items: flex-start; // Align items to the top in a row
+      gap: var(--gap-lg); // Space between columns
     }
   }
-  
-  .about-photo {
-    width: 150px; /* Set image size */
-    height: 150px;
-    border-radius: 50%; /* Make it round */
-    object-fit: cover; /* Ensure image covers the circle */
-    border: 4px solid var(--primary-color); /* Add a border */
-  }
-  
-  .about-text {
-    flex-grow: 1;
+
+  .about-image {
+    flex-shrink: 0; // Prevent image container from shrinking
+    // Add margin/padding if needed
   }
 
-  .section-padding {
-     display: flex; 
-}
+  .about-photo {
+    width: 180px; // Set image size (slightly larger example)
+    height: 180px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--primary-color); // Use primary color for border
+    box-shadow: var(--base-shadow); // Optional shadow
+  }
+
+  .about-text {
+    flex-grow: 1; // Text takes remaining space
+    // Adjust max-width for text block if needed
+  }
+
+  h2 {
+    color: var(--primary-color-dark); // Use dark primary for headings
+    margin-bottom: var(--gap-md); // Add space below headings
+    // Inherits other styles from global
+  }
+
+  p {
+     color: var(--text-color); // Ensure paragraphs are dark
+     // Inherits margin-bottom from global
+  }
