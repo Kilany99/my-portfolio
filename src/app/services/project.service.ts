@@ -35,7 +35,7 @@ export class ProjectService {
         'Domain-Driven Design'
       ],
       githubUrl: 'https://github.com/Kilany99/order-tracking-system',
-      imageUrl: 'assets/images/order-tracking-system.png'
+      imageUrl: 'images/orders.png'
     },
     {
       id: 2,
@@ -54,7 +54,7 @@ export class ProjectService {
         'REST APIs'
       ],
       githubUrl: 'https://github.com/Kilany99/ParkingSystem',
-      imageUrl: 'assets/images/parking-system-architecture.png'
+      imageUrl: 'images/parking.jpg'
     },
     {
       id: 3,
@@ -73,7 +73,7 @@ export class ProjectService {
         'Bootstrap'
       ],
       githubUrl: 'https://github.com/Kilany99/surveillance-system',
-      imageUrl: 'assets/images/surveillance-system-demo.gif'
+      imageUrl: 'images/Surveillance.avif'
     },
     {
       id: 4,
@@ -90,7 +90,7 @@ export class ProjectService {
         'Custom Controls'
       ],
       githubUrl: 'https://github.com/Kilany99/task-manager-wpf',
-      imageUrl: 'assets/images/task-manager-screenshot.png'
+      imageUrl: 'images/task-manager.jpg'
     }
   ];
 

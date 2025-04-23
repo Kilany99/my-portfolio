@@ -2,20 +2,20 @@
 
 :host {
    display: block;
-   // min-height: 100vh; // Optional: Set min-height here instead of .section-padding
+   min-height: 100vh;
+   background-image: url('/images/programming-background-collage_23-2149901770.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+
 }
 
 // Styles for the inner .section-padding div
 .section-padding {
-  // Inherits padding, min-height, scroll-margin-top from styles.scss
 
   /* --- Skills Section Specific Background --- */
-  background-color: var(--background-color); // Use the main background color
-  // Optional: Add a very subtle pattern image
-  // background-image: url('/assets/images/skills-pattern.png');
-  // background-repeat: repeat;
-  // opacity: 0.1; // Make pattern very faint
-  // z-index: -1; // Place behind content
+  background-color: var(--background-color);
   /* --------------------------------------- */
 
   color: var(--text-color); // Use standard text color (dark)
@@ -27,7 +27,6 @@
 h2 {
   color: var(--primary-color-dark); // Use dark primary for title
   margin-bottom: var(--gap-lg); // Add space below title
-  // Inherits other styles from global
 }
 
 /* --- Layout for Content Inside Skills Section --- */

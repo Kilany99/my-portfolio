@@ -63,12 +63,13 @@
     padding: var(--gap-sm); // Use padding variable
     border-top: 1px solid var(--border-color); // Add border for separation
     a { 
-        color: var(--primary-color); // Use primary color for action links/buttons
+        color: var(--text-color-light); // Use primary color for action links/buttons
         
     }
     a:hover {
          text-decoration: underline; // Underline on hover
-         color: var(--hover-shadow); // Darker primary color on hover 
+         color: #ffffff; // Darker primary color on hover 
+         background-color: var(--primary-color);
     }
   }
 }
