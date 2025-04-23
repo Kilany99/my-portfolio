@@ -1,10 +1,13 @@
 import { Component } from '@angular/core';
 // Import animation functions
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { ScrollAnimationDirective } from '../../shared/scroll-animation.directive';
 
 @Component({
   selector: 'app-skills',
-  imports: [],
+  imports: [
+    ScrollAnimationDirective
+  ],
   templateUrl: './skills.component.html',
   styleUrl: './skills.component.scss',
   animations: [ 

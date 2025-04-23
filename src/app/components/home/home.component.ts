@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';   
-
+import { ScrollAnimationDirective } from '../../shared/scroll-animation.directive'; 
 // Import animation functions
 import { trigger, state, style, animate, transition } from '@angular/animations';
 
@@ -10,6 +10,7 @@ import { trigger, state, style, animate, transition } from '@angular/animations'
     imports: [
     CommonModule,
     RouterModule,
+    ScrollAnimationDirective 
  ],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],

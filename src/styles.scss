@@ -9,8 +9,7 @@ html, body {
 
 *, *::before, *::after {
   box-sizing: inherit; /* Inherit box-sizing */
-  // Removed default margin/padding reset here, let components manage spacing,
-  // or apply resets more specifically if needed.
+ 
 }
 
 /* --- Theme Variables --- */
@@ -28,9 +27,9 @@ html, body {
   --gap-sm: 8px;
   --gap-md: 20px;
   --gap-lg: 40px;
+  --header-height: 60px;
 }
 
-/* Optional: SCSS variables for functions like darken */
 $primary-color-scss: #007bff;
 
 
@@ -38,8 +37,8 @@ $primary-color-scss: #007bff;
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   line-height: 1.6;
-  color: var(--text-color); /* Use CSS variable */
-  background-color: var(--background-color); /* Use CSS variable */
+  color: var(--text-color); 
+  background-color: var(--background-color); 
 
   display: flex;
   flex-direction: column;
@@ -55,18 +54,10 @@ body {
 
 main {
   flex-grow: 1; /* Main content takes available space, pushing footer down */
-  padding-top: 60px; // Add padding equal to header height
-  padding-bottom: var(--gap-lg, 40px); 
-  // Padding will be handled by .section-padding or component styles
-  
-
-  /* If footer height varies, rely on margin-top on footer or padding-bottom on the last section */
-  // padding-bottom: 60px; /* Example */
 }
 
 footer {
   flex-shrink: 0; /* Prevent footer from shrinking */
-  // margin-top: auto; /* Optional: Pushes footer to the end in flex column */
   background-color: var(--text-color); /* Example: dark background */
   color: var(--background-color); /* Example: light text */
   padding: var(--gap-md, 20px);
@@ -98,9 +89,7 @@ footer {
 
 /* --- Typography --- */
 h1, h2, h3, h4 {
-  // Use a mix of CSS variables and SCSS functions if needed
-  color: var(--primary-color-dark); // Use CSS variable
-  // Or if you need darken: color: darken($primary-color-scss, 15%);
+  color: var(--primary-color-dark); 
   margin-bottom: 0.5em;
   line-height: 1.2;
 }
@@ -111,8 +100,14 @@ p {
 
 /* --- Utility/Layout Classes --- */
 .section-padding {
-  padding: var(--gap-lg, 40px) var(--gap-md, 20px); /* Use padding variables */
-  padding-top: calc(var(--gap-lg, 40px) + 60px); /* Add header height  top padding */
+  padding: var(--gap-lg, 40px) var(--gap-md, 20px); 
+  scroll-margin-top: var(--header-height);
+  min-height: 100vh;
+ // display: flex; 
+  flex-direction: column;
+  justify-content: center; // Centers content along the main axis (vertically in a column)
+  align-items: center; // Centers content along the cross axis (horizontally in a column)
+  text-align: center; // Center text blocks
 
 }
 

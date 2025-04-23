@@ -5,6 +5,7 @@ import { Project, ProjectService } from '../../services/project.service';
 
 // Import animation functions
 import { trigger, state, style, animate, transition,query,stagger } from '@angular/animations';
+import { ScrollAnimationDirective } from '../../shared/scroll-animation.directive';
 
 @Component({
   selector: 'app-projects',
@@ -12,6 +13,7 @@ import { trigger, state, style, animate, transition,query,stagger } from '@angul
   imports: [
     CommonModule,
     ProjectCardComponent,
+    ScrollAnimationDirective
     // ... other imports
   ],
   templateUrl: './projects.component.html',

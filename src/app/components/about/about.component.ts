@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ScrollAnimationDirective } from '../../shared/scroll-animation.directive';
 @Component({
   selector: 'app-about',
-  imports: [],
+  imports: [
+      ScrollAnimationDirective 
+  ],
   templateUrl: './about.component.html',
   styleUrl: './about.component.scss',
   animations: [ 
