@@ -1,56 +1,181 @@
 @import '../../../styles.scss'; // Import global styles for variables
 
 :host {
-  display: block;
+  display: flex; 
+  justify-content: space-between; // Space out children
+  align-items: center; // Vertically center children
   position: sticky;
   top: 0;
-  z-index: 10; // Ensure it stays above other content
-  height: var(--header-height); // Ensure height matches variable
-  display: flex;
-  align-items: center;
-  padding: 0 var(--gap-md);
+  z-index: 10;
+  height: var(--header-height);
+  padding: 0 var(--gap-md); // Use horizontal padding
 
-  background-color: var(--primary-color) ;
-
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Subtle shadow */
-  color: var(--background-color); 
-  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease; // Smooth transitions
-  /* ------------------------------------------------------------ */
+  /* --- Default (Partially Transparent) State --- */
+  background-color: var(--primary-color-dark);
+  
+  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+  color: var(--background-color);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease, color 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.3); // Make header bg darker and more transparent
+  backdrop-filter: blur(5px);
+  /* ------------------------------------------ */
 }
 
 // --- Styles when Header is Solid (on Home Section - when .is-solid class is present) ---
-:host.is-solid { 
-   background-color: var(--primary-color-dark); // Darker background for solid state
-
-   box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Stronger shadow */
-   color: var(--background-color); // Light text color for solid dark bg
+:host.is-solid {
+   background-color: var(--primary-color-dark); // Darker background when solid
+   box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+   color: var(--background-color);
 }
 /* ----------------------------------------------- */
 
-// Styles for elements *inside* the header (nav, ul, a)
-nav ul {
-   list-style: none;
-   display: flex;
-   gap: var(--gap-md);
-
-   a {
-      color: inherit; // Links inherit color from the host element's color property
-      text-decoration: none;
-      transition: color 0.3s ease;
-
-      &:hover {
-         color: var(--primary-color); // Highlight on hover
-         text-decoration: underline;
-      }
-   }
+.site-title {
+    font-size: 1.2em; // Adjust title size
+    font-weight: bold;
+    color: inherit; // Inherit color from host
+    flex-grow: 1; // Allow title to take space
+    margin-left: 16px; // Add left margin for spacing
+    text-align: center; // Center the title text
+    margin-right: 16px; // Add right margin for spacing
+    font-family: var(--font-family); // Use custom font
+    line-height: 1.5; // Adjust line height
+    text-transform: uppercase; // Make text uppercase
+    justify-self: center;
 }
 
-// // Media query for responsive header (if needed)
-// @media (max-width: 600px) {
-//   :host {
-//     // Adjust header styles for small screens
-//   }
-//   nav ul {
-//     // Adjust navigation layout
-//   }
-// }
+
+/* --- Mobile Toggle Button Styles --- */
+.menu-toggle {
+    display: none; // Hidden by default on larger screens
+    background: none; // No background
+    border: none; // No border
+    cursor: pointer;
+    padding: 0; // Remove default button padding
+    color: inherit; // Inherit color from header
+
+    mat-icon {
+       font-size: 24px; // Adjust icon size
+       width: 24px;
+       height: 24px;
+    }
+
+
+}
+/* ----------------------------------- */
+
+
+/* --- Navigation Styles (Default - Desktop) --- */
+nav {
+    ul {
+       list-style: none;
+       display: flex;
+       gap: var(--gap-md); // Space between desktop links
+       margin: 0; // Remove default ul margin
+       padding: 0; // Remove default ul padding
+       a {
+         color: inherit;
+         text-decoration: none;
+         transition: color 0.3s ease; // Smooth color change
+         position: relative; // Needed for underline effect
+   
+         &:hover {
+            color: var(--primary-color); // Highlight color
+         }
+   
+         /* --- Modern Underline Effect --- */
+         &::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -5px; // Position below the text
+            width: 0; // Start with zero width
+            height: 2px; // Thickness of the underline
+            background-color: var(--primary-color); // Color of the underline
+            transition: width 0.3s ease-out; // Animate the width
+         }
+   
+         &:hover::after {
+            width: 100%; // Expand underline on hover
+         }
+         /* ----------------------------- */
+   
+         &::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(var(--primary-color), 0.1); // Subtle background fill
+            transform: scaleX(0); // Start hidden
+            transform-origin: left; // Animate from left
+            transition: transform 0.3s ease-out;
+            z-index: -1; // Behind the text
+         }
+         &:hover::before {
+            transform: scaleX(1); // Expand fill on hover
+         }
+       }
+   
+    }
+}
+/* ------------------------------------------- */
+
+
+/* --- Media Query for Mobile Screens (Adjust breakpoint as needed) --- */
+@media (max-width: 768px) { 
+
+    :host {
+        // Adjust header padding or height if needed for mobile
+         height: auto; // Allow height to adjust if menu is open below it
+         flex-wrap: wrap; // Allow items to wrap if needed
+         padding: var(--gap-sm) var(--gap-md); // Adjust padding for mobile
+    }
+
+    .site-title {
+        flex-grow: 1; // Allow title to take space
+    }
+
+    /* --- Show Mobile Toggle Button --- */
+    .menu-toggle {
+        display: block; // Show the toggle button on mobile
+    }
+    /* ------------------------------- */
+
+    /* --- Hide Navigation By Default on Mobile --- */
+    nav {
+        display: none; // Hide the nav by default
+        flex-direction: column; // Stack links vertically when shown
+        width: 100%; // Take full width when shown
+         position: absolute;
+         top: var(--header-height); // Position below header
+         left: 0;
+         background-color: var(--primary-color-dark); // Solid background for opened menu
+         padding: var(--gap-md);
+         box-shadow: 0 5px 5px rgba(0,0,0,0.2);
+         
+    }
+
+    /* --- Styles When Navigation is OPEN (.is-open class is present) --- */
+    nav.is-open {
+        display: flex; // SHOW the nav when the .is-open class is added by Angular
+    }
+
+    nav ul {
+         flex-direction: column; // Stack links vertically
+         gap: var(--gap-sm); // Smaller gap for vertical links
+         width: 100%; // Links take full width
+         text-align: center; // Center link text
+         
+    }
+
+    nav ul li {
+        width: 100%; // List items take full width
+        padding: var(--gap-sm) 0; // Add vertical padding to list items
+         border-bottom: 1px solid rgba(255,255,255,0.1); 
+    }
+
+    nav ul li:last-child {
+        border-bottom: none; // No border on the last item
+    }
+}

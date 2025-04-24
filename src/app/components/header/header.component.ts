@@ -4,12 +4,14 @@ import { CommonModule } from '@angular/common';
 
 import { ScrollStateService } from '../../shared/scroll-state.service'; 
 import { Subscription } from 'rxjs'; 
+import { MatIconModule } from '@angular/material/icon';
 
 @Component({
   selector: 'app-header',
   imports: [
  //   RouterModule, 
-    CommonModule 
+    CommonModule,
+    MatIconModule 
   ],
   templateUrl: './header.component.html', 
   styleUrls: ['./header.component.scss'],
@@ -20,6 +22,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   @HostBinding('class.is-solid') isSolid = false; // Start not-solid (transparent)
 
   private scrollStateSubscription!: Subscription;
+  isNavOpen = false;
+
 
   constructor(private scrollStateService: ScrollStateService) { }
 
@@ -36,4 +40,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.scrollStateSubscription.unsubscribe();
      }
   }
+  toggleNav(): void {
+   this.isNavOpen = !this.isNavOpen;
+ }
+ closeNav(): void {
+   this.isNavOpen = false;
+}
 }
