@@ -1,0 +1,56 @@
+@import '../styles.scss'; // Import global styles for variables
+
+// Styles for the root app-root element 
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; 
+  
+}
+
+/* --- Scroll to Top Button Styles --- */
+.scroll-to-top-button {
+  position: fixed; 
+  bottom: var(--gap-md); 
+  right: var(--gap-md); 
+  z-index: 999; 
+
+  /* --- Appearance --- */
+  background-color: var(--primary-color); 
+  color: var(--background-color); 
+  border: none; 
+  border-radius: 50%; 
+  width: 64px; 
+  height: 64px; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  cursor: pointer;
+  box-shadow: var(--base-shadow); 
+  transition: opacity 0.3s ease-out, visibility 0.3s ease-out; // Smooth show/hide transition
+
+  /* --- Initial Hidden State --- */
+  opacity: 0; 
+  visibility: hidden; 
+  /* ---------------------------- */
+
+  /* --- Hover Effect --- */
+  &:hover {
+    background-color: var(--primary-color-dark); 
+    box-shadow: var(--hover-shadow); 
+  }
+
+  mat-icon {
+      font-size: 24px; // Icon size
+      width: 24px;
+      height: 24px;
+      color: inherit; // Icon inherits color from button
+  }
+}
+
+/* --- State when Button IS VISIBLE (.show class is present) --- */
+.scroll-to-top-button.show {
+  opacity: 1; // Fully visible
+  visibility: visible; // Allow interaction
+}
+/* -------------------------------------------------------- */

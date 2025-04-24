@@ -1,4 +1,4 @@
-import { Component, AfterViewInit, ViewChildren, ElementRef, QueryList  } from '@angular/core';
+import { Component, AfterViewInit, ViewChildren, ElementRef, QueryList, HostListener  } from '@angular/core';
 // import { RouterModule } from '@angular/router'; 
 import { ScrollStateService } from './shared/scroll-state.service'; // 
 
@@ -9,6 +9,7 @@ import { AboutComponent } from './components/about/about.component';
 import { SkillsComponent } from './components/skills/skills.component';
 import { ProjectsComponent } from './components/projects/projects.component';
 import { ContactComponent } from './components/contact/contact.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @Component({
@@ -21,7 +22,8 @@ import { ContactComponent } from './components/contact/contact.component';
     AboutComponent,
     SkillsComponent,
     ProjectsComponent,
-    ContactComponent 
+    ContactComponent,
+    MatIconModule 
   ],
   templateUrl: './app.component.html', 
   styleUrls: ['./app.component.scss'],
@@ -34,9 +36,24 @@ export class AppComponent {
 
   private observer!: IntersectionObserver; // Observer instance
 
+    // <--- Property to control button visibility (initially false)
+  isShowScrollToTop = false;
+  private scrollThreshold = 300; // Pixels scrolled to show button
+
   
   constructor(private scrollStateService: ScrollStateService) {}
 
+  // Listen for scroll events on the window
+  @HostListener('window:scroll', [])
+  onWindowScroll(): void {
+    // Check scroll position to decide whether to show the button
+    // window.scrollY is the vertical scroll position
+    if (window.scrollY > this.scrollThreshold) {
+      this.isShowScrollToTop = true;
+    } else {
+      this.isShowScrollToTop = false;
+    }
+  }
   ngAfterViewInit(): void {
      // Observe each section element
      this.observer = new IntersectionObserver(
@@ -69,8 +86,6 @@ export class AppComponent {
                   activeSectionId = this.sections.first.nativeElement.id;
              } else {
                  // If no section is clearly active, might retain previous or default
-                 // For simplicity, let's default to 'home' if nothing else is prominent
-                 // A more robust solution involves tracking previous state or using thresholds
                  activeSectionId = 'home'; // Default
              }
          }
@@ -93,12 +108,90 @@ export class AppComponent {
      this.sections.forEach(section => {
        this.observer.observe(section.nativeElement);
      });
+     this.sections.changes.subscribe(() => {
+      if (this.sections.length > 0) {
+          this.setupObserver();
+      }
+  });
+  if (this.sections.length > 0) {
+     this.setupObserver();
   }
 
+    }
+
+    private setupObserver(): void {
+      if (this.observer) {
+          this.observer.disconnect();
+      }
+  
+      this.observer = new IntersectionObserver(
+        (entries) => {
+          let currentActiveSectionId: string | null = null;
+          let minDistanceFromTop = Infinity; // Track which intersecting element is closest to the top
+  
+          entries.forEach(entry => {
+             // We only care about elements that are currently intersecting
+             if (entry.isIntersecting) {
+                // Prioritize elements that are intersecting and in the top half of the viewport
+                if (entry.boundingClientRect.top >= 0 && entry.boundingClientRect.top <= window.innerHeight / 2) {
+                    // If this intersecting element is closer to the top than our current best candidate
+                    if (entry.boundingClientRect.top < minDistanceFromTop) {
+                       minDistanceFromTop = entry.boundingClientRect.top;
+                       currentActiveSectionId = entry.target.id; // Found a new best candidate in the top half
+                    }
+                } else if (currentActiveSectionId === null && entry.intersectionRatio > 0) {
+                   // Fallback: If no element is in the top half yet,
+                   // consider the first intersecting element with any visibility
+                   // This helps when the first section is just scrolling out or the next is just entering
+                    currentActiveSectionId = entry.target.id; // Take this one as a fallback candidate
+                }
+             }
+          });
+  
+          // If after checking all entries, we didn't find a clear active section (e.g., between sections)
+          // default to 'home'. We also explicitly set 'home' if scrolled to the very top.
+          let finalActiveSectionId = currentActiveSectionId || 'home';
+  
+          // Handle edge case: If scrolled to the very top, force active section to 'home'
+          if (window.scrollY === 0 && this.sections.first && this.sections.first.nativeElement.id === 'home') {
+               finalActiveSectionId = 'home';
+          }
+  
+  
+           // Check if the determined activeSectionId is one of our expected section IDs
+           // This adds robustness against unexpected elements triggering the observer
+           const validSectionIds = ['home', 'about', 'skills', 'projects', 'contact']; // List your section IDs
+           if (validSectionIds.includes(finalActiveSectionId)) {
+               this.scrollStateService.setActiveSection(finalActiveSectionId);
+           } else {
+               // If somehow an unexpected ID is determined, default to home
+               this.scrollStateService.setActiveSection('home'); // Default safety
+           }
+          // ---------------------------------
+  
+        },
+        {
+          root: null, // viewport
+          rootMargin: '0px 0px -50% 0px', // Adjust root margin to prioritize intersection in the top half
+          threshold: [0] // Trigger as soon as any pixel is visible
+        }
+      );
+  
+      // Start observing each section element
+      this.sections.forEach(section => {
+        this.observer.observe(section.nativeElement);
+      });
+  }
   // Clean up observer on component destroy
   ngOnDestroy(): void {
      if (this.observer) {
         this.observer.disconnect();
      }
+  }
+  scrollToTop(): void {
+    window.scrollTo({
+      top: 0, // Scroll to the top (0,0)
+      behavior: 'smooth' // Use smooth scrolling animation
+    });
   }
 }

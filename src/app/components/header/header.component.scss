@@ -34,12 +34,10 @@
     font-weight: bold;
     color: inherit; // Inherit color from host
     flex-grow: 1; // Allow title to take space
-    margin-left: 16px; // Add left margin for spacing
-    text-align: center; // Center the title text
-    margin-right: 16px; // Add right margin for spacing
-    font-family: var(--font-family); // Use custom font
-    line-height: 1.5; // Adjust line height
-    text-transform: uppercase; // Make text uppercase
+   //  margin-left: 16px; 
+    font-family: var(--font-family); 
+    line-height: 1.5; 
+    text-transform: uppercase; 
     justify-self: center;
 }
 
