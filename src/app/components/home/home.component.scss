@@ -66,3 +66,24 @@ button {
 
    filter: brightness(0.8) grayscale(0.2); // Example filters
 }
+a{
+    color: var(--secondary-color); // Highlight links with accent color
+    text-decoration: none; // Remove underline
+    transition: color 0.3s ease; // Smooth transition for hover effect
+    border-radius: 20px;
+  //  border: solid 1px #f0f0f0;
+    margin: 10px;
+    padding: 10px;
+    background-color: transparent;
+
+    &:hover {
+        color: var(--primary-color); // Change color on hover
+        text-decoration: underline; // Optional underline on hover
+        background-color: rgba(grey, 0.4); // Optional background color on hover
+        text-decoration: none;
+        transition: all 0.3s ease; // Smooth transition for hover effect
+        transform: matrix(1.05, 0, 0, 1.05, 0, 0); // Slightly scale up on hover
+        
+    }
+    
+}

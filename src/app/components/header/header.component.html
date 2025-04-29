@@ -4,13 +4,13 @@
   <button class="menu-toggle" (click)="toggleNav()">
      <mat-icon *ngIf="!isNavOpen">menu</mat-icon> <mat-icon *ngIf="isNavOpen">close</mat-icon> </button>
 
-  <nav [class.is-open]="isNavOpen">
-    <ul>
-      <li><a href="#home" (click)="closeNav()">Home</a></li> 
-      <li><a href="#about" (click)="closeNav()">About</a></li> 
-      <li><a href="#skills" (click)="closeNav()">Skills</a></li> 
-      <li><a href="#projects" (click)="closeNav()">Projects</a></li> 
-      <li><a href="#contact" (click)="closeNav()">Contact</a></li> 
-    </ul>
-  </nav>
+     <nav [class.is-open]="isNavOpen">
+      <ul>
+        <li><a href="#home" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'home'">Home</a></li>
+        <li><a href="#about" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'about'">About</a></li>
+        <li><a href="#skills" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'skills'">Skills</a></li>
+        <li><a href="#projects" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'projects'">Projects</a></li>
+        <li><a href="#contact" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'contact'">Contact</a></li>
+      </ul>
+    </nav>
 </header>

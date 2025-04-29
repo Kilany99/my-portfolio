@@ -114,13 +114,23 @@ nav {
             transform: scaleX(1); // Expand fill on hover
          }
        }
-   
+       /* --- Styles for the Active Link --- */
+       &.is-active { 
+        color: var(--primary-color); 
+        font-weight: bold; 
+ 
+
+        &::after {
+           width: 100%; 
+           background-color: var(--primary-color);
+        }
+    }
     }
 }
 /* ------------------------------------------- */
 
 
-/* --- Media Query for Mobile Screens (Adjust breakpoint as needed) --- */
+/* --- Media Query for Mobile Screens --- */
 @media (max-width: 768px) { 
 
     :host {

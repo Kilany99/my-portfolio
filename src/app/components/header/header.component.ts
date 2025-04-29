@@ -23,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   private scrollStateSubscription!: Subscription;
   isNavOpen = false;
+  currentActiveSectionId: string = 'home'; // Initialize to 'home'
 
 
   constructor(private scrollStateService: ScrollStateService) { }
@@ -31,7 +32,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
      // Subscribe to changes in the active section
      this.scrollStateSubscription = this.scrollStateService.activeSection$.subscribe(activeSectionId => {
         this.isSolid = (activeSectionId === 'home');
-        // console.log('Active Section ID:', activeSectionId, 'isSolid:', this.isSolid); //  logging for debugging
+      // Update the current active section ID property
+        this.currentActiveSectionId = activeSectionId;
      });
   }
 
