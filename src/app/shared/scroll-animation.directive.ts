@@ -56,7 +56,7 @@ export class ScrollAnimationDirective implements AfterViewInit, OnDestroy {
              });
            });
          },
-         { threshold: this.threshold } // Use the threshold input
+         { threshold: [0, 1] } // Trigger when 0% or 100% is visible
        );
 
        // Start observing the host element

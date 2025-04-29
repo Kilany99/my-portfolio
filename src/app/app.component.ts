@@ -79,7 +79,6 @@ export class AppComponent {
          });
 
          // Default to 'home' if no section is intersecting (e.g., at top of page)
-         // Or if we scroll rapidly between sections
          if (activeSectionId === null) {
              // Check the first section if it's at the very top
              if (this.sections.first && this.sections.first.nativeElement.getBoundingClientRect().top >= 0 && this.sections.first.nativeElement.getBoundingClientRect().top <= window.innerHeight * 0.5) {
@@ -123,64 +122,60 @@ export class AppComponent {
       if (this.observer) {
           this.observer.disconnect();
       }
-  
+      // Set up the Intersection Observer
       this.observer = new IntersectionObserver(
         (entries) => {
-          let currentActiveSectionId: string | null = null;
-          let minDistanceFromTop = Infinity; // Track which intersecting element is closest to the top
+           let currentActiveSectionId: string | null = null;
+           let minDistanceFromTop = Infinity; // Track which intersecting element is closest to the top
   
-          entries.forEach(entry => {
-             // We only care about elements that are currently intersecting
-             if (entry.isIntersecting) {
-                // Prioritize elements that are intersecting and in the top half of the viewport
-                if (entry.boundingClientRect.top >= 0 && entry.boundingClientRect.top <= window.innerHeight / 2) {
-                    // If this intersecting element is closer to the top than our current best candidate
-                    if (entry.boundingClientRect.top < minDistanceFromTop) {
-                       minDistanceFromTop = entry.boundingClientRect.top;
-                       currentActiveSectionId = entry.target.id; // Found a new best candidate in the top half
-                    }
-                } else if (currentActiveSectionId === null && entry.intersectionRatio > 0) {
-                   // Fallback: If no element is in the top half yet,
-                   // consider the first intersecting element with any visibility
-                   // This helps when the first section is just scrolling out or the next is just entering
-                    currentActiveSectionId = entry.target.id; // Take this one as a fallback candidate
-                }
-             }
-          });
+           entries.forEach(entry => {
+              // Find the entry that is intersecting and closest to the top of the viewport
+              // Only consider entries that are intersecting
+              if (entry.isIntersecting) {
+                  // Determine the active section ID based on intersection and position
+                  // Simple approach: the topmost intersecting element
+                  if (entry.boundingClientRect.top < minDistanceFromTop) {
+                     minDistanceFromTop = entry.boundingClientRect.top;
+                     currentActiveSectionId = entry.target.id;
+                  }
+              
+              }
+           });
   
-          // If after checking all entries, we didn't find a clear active section (e.g., between sections)
-          // default to 'home'. We also explicitly set 'home' if scrolled to the very top.
-          let finalActiveSectionId = currentActiveSectionId || 'home';
+           // If after checking all entries, we didn't find a clearly active section
+           // This can happen when scrolling rapidly between sections or at the very top/bottom
+           // We fall back to 'home' or the previously active section if needed.
+           let finalActiveSectionId = currentActiveSectionId || 'home'; // Default to 'home' if nothing is clearly active
   
-          // Handle edge case: If scrolled to the very top, force active section to 'home'
-          if (window.scrollY === 0 && this.sections.first && this.sections.first.nativeElement.id === 'home') {
-               finalActiveSectionId = 'home';
-          }
+           // Handle edge case: If scrolled to the very top, force active section to 'home'
+           if (window.scrollY === 0 && this.sections.first && this.sections.first.nativeElement.id === 'home') {
+                finalActiveSectionId = 'home';
+           }
   
   
-           // Check if the determined activeSectionId is one of our expected section IDs
-           // This adds robustness against unexpected elements triggering the observer
+           // Update the service with the determined active section ID
            const validSectionIds = ['home', 'about', 'skills', 'projects', 'contact']; // List your section IDs
            if (validSectionIds.includes(finalActiveSectionId)) {
                this.scrollStateService.setActiveSection(finalActiveSectionId);
            } else {
-               // If somehow an unexpected ID is determined, default to home
                this.scrollStateService.setActiveSection('home'); // Default safety
            }
-          // ---------------------------------
   
         },
         {
-          root: null, // viewport
-          rootMargin: '0px 0px -50% 0px', // Adjust root margin to prioritize intersection in the top half
-          threshold: [0] // Trigger as soon as any pixel is visible
+          root: null, // Observe relative to the viewport
+          rootMargin: '0px', // Observe relative to the standard viewport boundary
+         // threshold: [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1] // Trigger at multiple points of intersection
+          threshold: [0, 1] // Trigger when 0% or 100% is visible
+       
+     
         }
       );
   
-      // Start observing each section element
-      this.sections.forEach(section => {
-        this.observer.observe(section.nativeElement);
-      });
+      // ... Start observing each section element ...
+       this.sections.forEach(section => {
+         this.observer.observe(section.nativeElement);
+       });
   }
   // Clean up observer on component destroy
   ngOnDestroy(): void {
