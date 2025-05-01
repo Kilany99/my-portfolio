@@ -1,11 +1,48 @@
-<section class="section-padding"    appScrollAnimation appScrollAnimationDuration="2000ms" appScrollAnimationFromY="120px" id="projects">
+<section class="section-padding"    appScrollAnimation appScrollAnimationDuration="2000ms" appScrollAnimationFromY="120px" id="projects">
   <h2>My Projects</h2>
-  <div class="projects-list-container" [@listAnimation]="listState"> <!-- <-- Bind trigger to state -->
+
+  <div class="projects-list-container" *ngIf="!selectedProject" [@listAnimation]="listState"> 
     <app-project-card
       *ngFor="let project of projects"
-      [project]="project">
+      [project]="project"
+      (viewDetails)="viewProject($event)">
     </app-project-card>
 
     <p *ngIf="projects.length === 0">No projects to display yet.</p>
   </div>
-</section>
+  <div class="project-detail-container" *ngIf="selectedProject" [@detailAnimation]="selectedProject ? 'visible' : 'void'"> 
+     <button mat-icon-button (click)="closeProject()" class="back-button">
+        <mat-icon>arrow_back </mat-icon>
+     </button>
+
+
+     <h3>{{ selectedProject.name }}</h3>
+
+     <div class="technologies">
+        <h4>Technologies Used:</h4>
+         <ul>
+           <li *ngFor="let tech of selectedProject.technologies">{{ tech }}</li>
+         </ul>
+      </div>
+
+      <mat-card-actions> 
+          <a *ngIf="selectedProject.liveDemoUrl" mat-button [href]="selectedProject.liveDemoUrl" target="_blank">Live Demo</a>
+          <a *ngIf="selectedProject.githubUrl" mat-button [href]="selectedProject.githubUrl" target="_blank">GitHub Repo</a>
+       </mat-card-actions>
+
+      <p>{{ selectedProject.longDescription }}</p> 
+
+
+      <div *ngIf="selectedProject.screenshots && selectedProject.screenshots.length > 0" class="project-screenshots">          <h4>Screenshots:</h4>
+          <div class="screenshot-gallery">
+              <img *ngFor="let screenshotUrl of selectedProject.screenshots" [src]="screenshotUrl" [alt]="selectedProject.name + ' Screenshot'">
+          </div>
+      </div>
+
+      <div *ngIf="selectedProject.videoUrl" class="project-video"> 
+          <h4>Project Video:</h4>
+          <iframe [src]="selectedProject.videoUrl | safeUrl" frameborder="0" allowfullscreen></iframe> 
+       </div>
+
+       </div>
+  </section>

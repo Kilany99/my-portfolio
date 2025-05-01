@@ -13,16 +13,16 @@
   background-color: var(--alternate-background); // Use the alternate background color
   /* ------------------------------------------ */
 
-  color: var(--text-color); // Use standard text color
-  text-align: center; // Center title and grid container
-  justify-content: flex-start; // Align content to the top (title, then grid)
-  align-items: center; // Center horizontally
+  color: var(--text-color); 
+  text-align: center; 
+  justify-content: flex-start; 
+  align-items: center; 
+  overflow-y: auto;
 }
 
 h2 {
   color: var(--primary-color-dark); // Use dark primary for title
   margin-bottom: var(--gap-lg); // Add space below title
-  // Inherits other styles from global
 }
 
 /* --- Layout for Content Inside Projects Section --- */
@@ -45,4 +45,82 @@ h2 {
   width: 100%; // Allow grid to take full width of padding container
   max-width: 1200px; // Limit grid overall width
   margin: 0 auto; // Center the grid
+}
+/* --- Project Detail View Styles --- */
+.project-detail-container {
+  width: 100%; // Fill the container horizontally
+  max-width: 900px; // Limit width for readability
+  margin: 0 auto; // Center the container
+  padding: var(--gap-md); // Add some padding
+  background-color: var(--card-background); // Use a background color
+  border-radius: 8px;
+  box-shadow: var(--hover-shadow); // Add a shadow
+
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-md); // Space between detail elements
+
+  h3 {
+      color: var(--primary-color-dark);
+      margin-top: 0; // Remove default margin
+  }
+
+  .back-button {
+      align-self: flex-start; // Align to the left
+      margin-bottom: var(--gap-md); // Space below button
+      background-color: var(--primary-color);
+      padding: 10px;
+      margin: 10px;
+      border-radius: 10px ;
+  }
+
+  .technologies {
+      // Style the technologies list if needed
+      ul {
+          display: flex;
+          flex-wrap: wrap;
+          list-style: none;
+          padding: 0;
+          margin: 0;
+          gap: var(--gap-sm);
+      }
+      li {
+           background-color: var(--alternate-background);
+           color: var(--text-color-light);
+           padding: 5px 10px;
+           border-radius: 4px;
+           font-size: 0.9em;
+           border: 1px solid var(--border-color);
+      }
+  }
+
+  mat-card-actions {
+      // Style action links container if needed
+      margin-top: 0; // Remove default mat-card-actions margin
+  }
+
+  .project-screenshots {
+       h4 { margin-bottom: var(--gap-sm); }
+       .screenshot-gallery {
+           display: grid;
+           gap: var(--gap-sm);
+           grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); // Responsive grid for screenshots
+           img {
+               width: 100%;
+               height: auto;
+               border: 1px solid var(--border-color);
+               border-radius: 4px;
+           }
+       }
+  }
+
+  .project-video {
+      h4 { margin-bottom: var(--gap-sm); }
+      iframe {
+          width: 100%; // Make iframe fill width
+          height: 400px; // Set a default height (adjust as needed)
+          border: 1px solid var(--border-color);
+          border-radius: 4px;
+      }
+  }
 }

@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common'; 
 import { Project } from '../../services/project.service'; 
 
@@ -20,6 +20,7 @@ import { MatIconModule } from '@angular/material/icon';
 })
 export class ProjectCardComponent {
   @Input() project!: Project;
+  @Output() viewDetails = new EventEmitter<Project>();
 
   constructor() { }
 }
