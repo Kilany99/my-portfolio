@@ -8,6 +8,10 @@
   <app-contact><section id="contact" class="section-padding" #section></section></app-contact>
 </main>
 
+<app-chat-icon></app-chat-icon>
+<app-chat-window *ngIf="(chatService.isChatOpen$ | async)"></app-chat-window> 
+
+
 <app-footer></app-footer>
 
 <button class="scroll-to-top-button" [class.show]="isShowScrollToTop"  (click)="scrollToTop()"> 

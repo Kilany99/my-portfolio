@@ -12,6 +12,9 @@ import { ProjectsComponent } from './components/projects/projects.component';
 import { ContactComponent } from './components/contact/contact.component';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { ChatWindowComponent } from './chat/chat-window/chat-window.component';
+import { ChatIconComponent } from './chat/chat-icon/chat-icon.component';
+import { ChatService } from './chat/chat.service';
 
 
 @Component({
@@ -27,7 +30,9 @@ import { CommonModule } from '@angular/common';
     SkillsComponent,
     ProjectsComponent,
     ContactComponent,
-    MatIconModule
+    MatIconModule,
+    ChatWindowComponent,
+    ChatIconComponent,
   ],
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
@@ -42,7 +47,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   isShowScrollToTop = false;
   private scrollThreshold = 300;
 
-  constructor(private scrollStateService: ScrollStateService) {}
+  constructor(private scrollStateService: ScrollStateService, public chatService: ChatService) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {

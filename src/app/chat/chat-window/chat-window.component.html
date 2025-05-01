@@ -1,0 +1,28 @@
+<mat-card class="chat-window-container">
+    <mat-card-header>
+      <mat-card-title>Portfolio Assistant</mat-card-title>
+      <button mat-icon-button class="close-button" (click)="closeChat()">
+        <mat-icon>close</mat-icon>
+      </button>
+    </mat-card-header>
+  
+    <mat-card-content class="chat-messages" #messageList> 
+      <div *ngFor="let message of (messages$ | async)" class="message" [class.user]="message.sender === 'user'" [class.bot]="message.sender === 'bot'">
+        <div class="message-bubble">
+          <p>{{ message.text }}</p>
+          <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span> 
+        </div>
+      </div>
+    </mat-card-content>
+  
+    <mat-card-actions class="chat-input-area">
+      <form (submit)="onEnter($event)"> 
+         <mat-form-field appearance="outline" class="message-input">
+           <input matInput placeholder="Ask me something..." [(ngModel)]="userMessage" name="userMessage">
+         </mat-form-field>
+         <button mat-icon-button color="primary" (click)="sendMessage()" [disabled]="!userMessage.trim()">
+            <mat-icon>send</mat-icon>
+         </button>
+      </form>
+    </mat-card-actions>
+  </mat-card>

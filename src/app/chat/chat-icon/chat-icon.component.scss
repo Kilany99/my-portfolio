@@ -1,0 +1,25 @@
+@import '../../../styles.scss'; // Import global styles
+
+.chat-toggle-button {
+    position: fixed;
+    bottom: var(--gap-md); 
+    left: var(--gap-lg); 
+    z-index: 1001;
+
+    border-radius: 40px;
+ 
+    background-color: var(--secondary-color);
+    color: var(--background-color);
+    width: 56px; // Default FAB size
+    height: 56px;
+    box-shadow: var(--hover-shadow); // Add shadow
+    transition: transform 0.3s ease;
+
+    &:hover {
+        transform: scale(1.05); // Subtle hover effect
+    }
+}
+img {
+    width: 40px; // Adjust icon size
+    height: 40px;
+}
