@@ -1,28 +1,34 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs'; // Use rxjs for state management
-import { delay, tap } from 'rxjs/operators'; // Operators for simulation
+import { BehaviorSubject, Observable, from } from 'rxjs';
+import { tap } from 'rxjs/operators';
+import axios from 'axios';
 
-// Define a type for chat messages
 export interface ChatMessage {
   text: string;
-  sender: 'user' | 'bot'; 
+  sender: 'user' | 'bot';
   timestamp: Date;
 }
 
+interface ChatRequest {
+  message: string; 
+}
+
+interface ChatResponse {
+  botMessage: string;  
+}
+
 @Injectable({
-  providedIn: 'root', 
+  providedIn: 'root',
 })
 export class ChatService {
-  // State for the chat window visibility
+  private readonly baseUrl = 'https://192.168.43.144:45455/api/chat'; 
   private isChatOpenSubject = new BehaviorSubject<boolean>(false);
-  isChatOpen$ = this.isChatOpenSubject.asObservable(); // Observable for components
+  isChatOpen$ = this.isChatOpenSubject.asObservable();
 
-  // State for the chat messages
   private messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
-  messages$ = this.messagesSubject.asObservable(); // Observable for components
+  messages$ = this.messagesSubject.asObservable();
 
   constructor() {
-    // Optional: Add an initial bot greeting message
     this.addMessage({
       text: "Hi there! I'm Abdalla's portfolio assistant. Ask me about his skills, projects, or experience!",
       sender: 'bot',
@@ -30,63 +36,53 @@ export class ChatService {
     });
   }
 
-  /**
-   * Toggles the visibility of the chat window.
-   */
   toggleChat(): void {
     this.isChatOpenSubject.next(!this.isChatOpenSubject.value);
   }
 
-  /**
-   * Closes the chat window.
-   */
   closeChat(): void {
     this.isChatOpenSubject.next(false);
   }
 
-  /**
-   * Adds a message to the chat history.
-   * @param message The message to add.
-   */
   private addMessage(message: ChatMessage): void {
     const currentMessages = this.messagesSubject.value;
     this.messagesSubject.next([...currentMessages, message]);
   }
 
-  /**
-   * Sends a user message and simulates a bot response.
-   * @param userMessage The message from the user.
-   */
-  sendMessage(userMessage: string): void {
-    if (!userMessage.trim()) {
-      return; // Don't send empty messages
-    }
+  async sendMessage(userMessage: string): Promise<void> {
+    if (!userMessage.trim()) return;
 
-    // Add user message to the chat
-    const newUserMessage: ChatMessage = {
+    const userChatMessage: ChatMessage = {
       text: userMessage,
       sender: 'user',
       timestamp: new Date(),
     };
-    this.addMessage(newUserMessage);
+    this.addMessage(userChatMessage);
 
-    of(`You asked: "${userMessage}"\n\n(I'm under bulding right now, please wait for me to finish building my model and then I will respond to your questions.)`)
-      .pipe(
-        delay(1000), // Simulate network latency
-        tap((botResponseText) => {
-          const botMessage: ChatMessage = {
-            text: botResponseText,
-            sender: 'bot',
-            timestamp: new Date(),
-          };
-          this.addMessage(botMessage); // Add the simulated bot response
-        })
-      )
-      .subscribe(); // Subscribe to execute the simulation
-    // ----------------------------------------------------------------
+    try {
+      const response = await axios.post<ChatResponse>(
+        this.baseUrl,  
+        { message: userMessage } as ChatRequest,  
+        {
+          headers: { 'Content-Type': 'application/json' },
+        }
+      );
+
+      const botMessage: ChatMessage = {
+        text: response.data.botMessage,  // Matches backend's BotMessage property
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      this.addMessage(botMessage);
+    } catch (error: any) {
+      const errorText = error.response?.data || 'Sorry, I encountered an error while processing your message.';
+      const errorMessage: ChatMessage = {
+        text: errorText,
+        sender: 'bot',
+        timestamp: new Date(),
+      };
+      this.addMessage(errorMessage);
+      console.error('Error sending message to chatbot:', error);
+    }
   }
-
-  // --- Placeholder for Real AI Backend Communication ---
- 
-  // ----------------------------------------------------
 }
