@@ -1,6 +1,7 @@
+// chat.service.ts
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, from } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { BehaviorSubject, Observable, from, of } from 'rxjs'; 
+import { tap, catchError, finalize, ignoreElements } from 'rxjs/operators'; 
 import axios from 'axios';
 
 export interface ChatMessage {
@@ -10,25 +11,31 @@ export interface ChatMessage {
 }
 
 interface ChatRequest {
-  message: string; 
+  message: string;
 }
 
 interface ChatResponse {
-  botMessage: string;  
+  botMessage: string;
 }
 
 @Injectable({
   providedIn: 'root',
 })
 export class ChatService {
-  private readonly baseUrl = 'https://192.168.43.144:45455/api/chat'; 
+  private readonly baseUrl = 'https://192.168.43.144:45455/api/chat';
+
   private isChatOpenSubject = new BehaviorSubject<boolean>(false);
   isChatOpen$ = this.isChatOpenSubject.asObservable();
 
   private messagesSubject = new BehaviorSubject<ChatMessage[]>([]);
   messages$ = this.messagesSubject.asObservable();
 
+  // Loading state subject and observable
+  private _isLoading = new BehaviorSubject<boolean>(false); // Initialize with false
+  public readonly isLoading$ = this._isLoading.asObservable(); // Expose as public observable
+
   constructor() {
+    // Initial welcome message from the bot
     this.addMessage({
       text: "Hi there! I'm Abdalla's portfolio assistant. Ask me about his skills, projects, or experience!",
       sender: 'bot',
@@ -49,9 +56,14 @@ export class ChatService {
     this.messagesSubject.next([...currentMessages, message]);
   }
 
-  async sendMessage(userMessage: string): Promise<void> {
-    if (!userMessage.trim()) return;
+  // MODIFIED: Now returns an Observable<void>
+  sendMessage(userMessage: string): Observable<void> {
+    if (!userMessage.trim()) {
+      // If the message is empty, return an observable that immediately completes
+      return of(undefined);
+    }
 
+    // Add the user's message to the chat immediately for better UX
     const userChatMessage: ChatMessage = {
       text: userMessage,
       sender: 'user',
@@ -59,30 +71,43 @@ export class ChatService {
     };
     this.addMessage(userChatMessage);
 
-    try {
-      const response = await axios.post<ChatResponse>(
-        this.baseUrl,  
-        { message: userMessage } as ChatRequest,  
-        {
-          headers: { 'Content-Type': 'application/json' },
-        }
-      );
+    // Set loading state to true before making the API call
+    this._isLoading.next(true);
 
-      const botMessage: ChatMessage = {
-        text: response.data.botMessage,  // Matches backend's BotMessage property
-        sender: 'bot',
-        timestamp: new Date(),
-      };
-      this.addMessage(botMessage);
-    } catch (error: any) {
-      const errorText = error.response?.data || 'Sorry, I encountered an error while processing your message.';
-      const errorMessage: ChatMessage = {
-        text: errorText,
-        sender: 'bot',
-        timestamp: new Date(),
-      };
-      this.addMessage(errorMessage);
-      console.error('Error sending message to chatbot:', error);
-    }
+    // Use 'from' to convert the Axios promise into an Observable
+    return from(axios.post<ChatResponse>(
+      this.baseUrl,
+      { message: userMessage } as ChatRequest, // Ensure the request body matches your backend's expectation
+      {
+        headers: { 'Content-Type': 'application/json' },
+        timeout: 100000,
+      }
+    )).pipe(
+      tap(response => {
+        const botMessage: ChatMessage = {
+          text: response.data.botMessage, 
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        this.addMessage(botMessage);
+      }),
+      catchError(error => {
+        const errorText = error.response?.data?.message || 'Sorry, I encountered an error while processing your message.';
+        const errorMessage: ChatMessage = {
+          text: errorText,
+          sender: 'bot',
+          timestamp: new Date(),
+        };
+        this.addMessage(errorMessage);
+        console.error('Error sending message to chatbot:', error);
+
+        return of(undefined);
+      }),
+      ignoreElements(),  //This operator will discard the emitted AxiosXHR value allowing the Observable to be of type Observable<void
+      finalize(() => {
+        console.log('ChatService: Observable stream finalized. Setting isLoading to false.'); // DEBUG LOG
+        this._isLoading.next(false);
+      })
+    );
   }
 }

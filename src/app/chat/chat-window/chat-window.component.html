@@ -13,16 +13,25 @@
           <span class="timestamp">{{ message.timestamp | date:'shortTime' }}</span> 
         </div>
       </div>
+      <div class="message bot" *ngIf="isLoading$ | async">
+        <div class="message-bubble">
+          <div class="loading-indicator">
+            <span></span>
+            <span></span>
+           <span></span>
+          </div>
+        </div>
+      </div>
     </mat-card-content>
   
     <mat-card-actions class="chat-input-area">
       <form (submit)="onEnter($event)"> 
          <mat-form-field appearance="outline" class="message-input">
-           <input matInput placeholder="Ask me something..." [(ngModel)]="userMessage" name="userMessage">
+           <input matInput placeholder="Ask me something..." [(ngModel)]="userMessage" name="userMessage"  [disabled]="(isLoading$ | async) ?? false">
          </mat-form-field>
-         <button mat-icon-button color="primary" (click)="sendMessage()" [disabled]="!userMessage.trim()">
+          <button mat-icon-button color="primary" (click)="sendMessage()"[disabled]="!userMessage.trim() || (isLoading$ | async)">
             <mat-icon>send</mat-icon>
-         </button>
+           </button>
       </form>
     </mat-card-actions>
   </mat-card>
