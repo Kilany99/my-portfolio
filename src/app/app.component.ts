@@ -1,4 +1,5 @@
-import { Component, AfterViewInit, ViewChildren, ElementRef, QueryList, HostListener, OnDestroy } from '@angular/core'; // <--- Import OnDestroy
+import { Component, AfterViewInit, ViewChildren, ElementRef, QueryList, HostListener, OnDestroy, PLATFORM_ID, Inject } from '@angular/core'; // <--- Import OnDestroy
+import { isPlatformBrowser } from '@angular/common';
 
 // import { RouterModule } from '@angular/router';
 import { ScrollStateService } from './shared/scroll-state.service';
@@ -47,7 +48,11 @@ export class AppComponent implements AfterViewInit, OnDestroy {
   isShowScrollToTop = false;
   private scrollThreshold = 300;
 
-  constructor(private scrollStateService: ScrollStateService, public chatService: ChatService) {}
+  constructor(
+    private scrollStateService: ScrollStateService, 
+    public chatService: ChatService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {
@@ -60,81 +65,84 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   // --- Intersection Observer Setup for Scroll State ---
   ngAfterViewInit(): void {
-     // The QueryList 'sections' is populated after the view is initialized,
-     // and its 'changes' observable emits when the list changes (e.g., after initial population).
-     this.sections.changes.subscribe((queryList: QueryList<ElementRef>) => {
-         // Set up the observer once the QueryList has elements
-         if (queryList.length > 0) {
-             this.setupObserver();
-         }
-     });
-
-   
+    if (isPlatformBrowser(this.platformId)) {
+      // The QueryList 'sections' is populated after the view is initialized,
+      // and its 'changes' observable emits when the list changes (e.g., after initial population).
+      this.sections.changes.subscribe((queryList: QueryList<ElementRef>) => {
+          // Set up the observer once the QueryList has elements
+          if (queryList.length > 0) {
+              this.setupObserver();
+          }
+      });
+    }
   }
 
   private setupObserver(): void {
-      // Disconnect any previous observer if setup runs again (e.g., view changes)
-      if (this.observer) {
-          this.observer.disconnect();
-      }
-      console.log('Setting up Intersection Observer for sections'); // Optional log
+    if (!isPlatformBrowser(this.platformId)) return;
+    // Disconnect any previous observer if setup runs again (e.g., view changes)
+    if (this.observer) {
+        this.observer.disconnect();
+    }
+    console.log('Setting up Intersection Observer for sections'); // Optional log
 
-      // Set up the Intersection Observer
-      this.observer = new IntersectionObserver(
-        (entries) => {
-           let currentActiveSectionId: string | null = null;
-           let minDistanceFromTop = Infinity;
+    // Set up the Intersection Observer
+    this.observer = new IntersectionObserver(
+      (entries) => {
+         let currentActiveSectionId: string | null = null;
+         let minDistanceFromTop = Infinity;
 
-           entries.forEach(entry => {
-              if (entry.isIntersecting) {
-                 // Prioritize elements intersecting and closest to the top half of the viewport
-                 if (entry.boundingClientRect.top >= 0 && entry.boundingClientRect.top <= window.innerHeight / 2) {
-                     if (entry.boundingClientRect.top < minDistanceFromTop) {
-                        minDistanceFromTop = entry.boundingClientRect.top;
-                        currentActiveSectionId = entry.target.id;
-                     }
-                 } else if (currentActiveSectionId === null && entry.intersectionRatio > 0) {
-                     // Fallback: If nothing in top half, take the first intersecting element with any visibility
+         entries.forEach(entry => {
+            if (entry.isIntersecting) {
+               // Prioritize elements intersecting and closest to the top half of the viewport
+               if (entry.boundingClientRect.top >= 0 && entry.boundingClientRect.top <= window.innerHeight / 2) {
+                   if (entry.boundingClientRect.top < minDistanceFromTop) {
+                      minDistanceFromTop = entry.boundingClientRect.top;
                       currentActiveSectionId = entry.target.id;
-                 }
-              }
-           });
+                   }
+               } else if (currentActiveSectionId === null && entry.intersectionRatio > 0) {
+                   // Fallback: If nothing in top half, take the first intersecting element with any visibility
+                    currentActiveSectionId = entry.target.id;
+               }
+            }
+         });
 
-           let finalActiveSectionId = currentActiveSectionId || 'home';
+         let finalActiveSectionId = currentActiveSectionId || 'home';
 
-           if (window.scrollY === 0 && this.sections.first && this.sections.first.nativeElement.id === 'home') {
-                finalActiveSectionId = 'home';
-           }
+         if (window.scrollY === 0 && this.sections.first && this.sections.first.nativeElement.id === 'home') {
+              finalActiveSectionId = 'home';
+         }
 
-           const validSectionIds = ['home', 'about', 'skills', 'projects', 'contact'];
-           if (validSectionIds.includes(finalActiveSectionId)) {
-               this.scrollStateService.setActiveSection(finalActiveSectionId);
-           } else {
-               this.scrollStateService.setActiveSection('home'); // Default safety
-           }
-        },
-        {
-          root: null, // viewport
-          rootMargin: '0px 0px -50% 0px', // Check intersection in the top half of the viewport
-          threshold: [0, 0.1, 0.5, 0.9, 1.0] // Observe at multiple thresholds within the top half
-        }
-      );
+         const validSectionIds = ['home', 'about', 'skills', 'projects', 'contact'];
+         if (validSectionIds.includes(finalActiveSectionId)) {
+             this.scrollStateService.setActiveSection(finalActiveSectionId);
+         } else {
+             this.scrollStateService.setActiveSection('home'); // Default safety
+         }
+      },
+      {
+        root: null, // viewport
+        rootMargin: '0px 0px -50% 0px', // Check intersection in the top half of the viewport
+        threshold: [0, 0.1, 0.5, 0.9, 1.0] // Observe at multiple thresholds within the top half
+      }
+    );
 
-      // Start observing each section element
-      this.sections.forEach(section => {
-         console.log('Observing section:', section.nativeElement.id); // Optional log
-         this.observer.observe(section.nativeElement);
-      });
+    // Start observing each section element
+    this.sections.forEach(section => {
+       console.log('Observing section:', section.nativeElement.id); // Optional log
+       this.observer.observe(section.nativeElement);
+    });
   }
   // --------------------------------------------------
 
   // Clean up observer on component destroy
   ngOnDestroy(): void {
-     console.log('AppComponent ngOnDestroy - Disconnecting observer'); // Optional log
-     if (this.observer) {
+    if (isPlatformBrowser(this.platformId)) {
+      console.log('AppComponent ngOnDestroy - Disconnecting observer'); // Optional log
+      if (this.observer) {
         this.observer.disconnect();
-     }
-     // Clean up ScrollStateService subscription in HeaderComponent's ngOnDestroy
+      }
+    }
+    // Clean up ScrollStateService subscription in HeaderComponent's ngOnDestroy
   }
 
   scrollToTop(): void {
