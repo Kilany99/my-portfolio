@@ -4,86 +4,342 @@
    display: block;
   min-height: 100vh; 
   background-image: url(/images/web-developer-portfolio.webp); 
-
   background-size: cover; 
   background-position: center; 
-  background-repeat: no-repeat; 
-
+  background-repeat: no-repeat;
+  position: relative;
 }
 
 // Styles for the inner .section-padding div
 .section-padding {
   /* --- Home Section Specific Background --- */
-  background-image: url('/assets/images/home-hero-bg.jpg'); /* <--- YOUR HERO IMAGE HERE */
+  background-image: url('/assets/images/home-hero-bg.jpg');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  color: var(--background-color); // Text color changes to light for dark background
+  color: var(--text-inverse);
 
   /* --- Dark Overlay for Readability --- */
   &::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0; bottom: 0;
-    background-color: var(--overlay-dark); // Use the dark overlay variable
-    z-index: -1; // Place behind content
+    background: linear-gradient(135deg, 
+      rgba(30, 41, 59, 0.85) 0%, 
+      rgba(30, 41, 59, 0.7) 50%, 
+      rgba(30, 41, 59, 0.85) 100%);
+    z-index: 1;
+    pointer-events: none; /* Allow clicks to pass through */
   }
-  /* ----------------------------------- */
 
+  /* --- Animated Background Pattern --- */
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: 
+      radial-gradient(circle at 25% 25%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+      radial-gradient(circle at 75% 75%, rgba(6, 182, 212, 0.15) 0%, transparent 50%);
+    z-index: 2;
+    animation: backgroundFloat 20s ease-in-out infinite;
+    pointer-events: none; /* Allow clicks to pass through */
+  }
 
-  /* --- Optional: Center Content if not done in global .section-padding --- */
+  /* --- Content Positioning --- */
   justify-content: center;
   align-items: center;
   text-align: center;
-  /* ------------------------------------------------------------------- */
+  z-index: 3;
+  position: relative;
+}
+
+/* --- Content Animations --- */
+.content-wrapper {
+  animation: fadeInUp 1s ease-out 0.3s both;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: var(--space-3xl);
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  border-radius: var(--border-radius-lg);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--shadow-xl);
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+  }
 }
 
 // Styles for elements *inside* the Home section
 h1 {
-    color: var(--secondary-color); // Highlight heading with accent color
-    // Inherits margin-bottom, line-height from global styles
-}
-
-p {
-    color: var(--background-color); // Ensure paragraphs are also light
-}
-
-button {
-    margin-top: var(--gap-md);
-    // Material button colors are handled by Material's theming or component inputs
-}
-/* --- Styles for the Video Background Element --- */
-.background-video {
-  position: absolute; // Position relative to the .section-padding parent
-  top: 50%; // Center the video
-  left: 50%; // Center the video
-  min-width: 100%; // Ensure it covers at least the width
-  min-height: 100%; // Ensure it covers at least the height
-  width: auto; // Maintain aspect ratio
-  height: auto; // Maintain aspect ratio
-  transform: translate(-50%, -50%); // Adjust position after centering to truly center
-  z-index: -1; // Place the video BEHIND the content overlay
-
-   filter: brightness(0.8) grayscale(0.2); // Example filters
-}
-a{
-    color: var(--secondary-color); // Highlight links with accent color
-    text-decoration: none; // Remove underline
-    transition: color 0.3s ease; // Smooth transition for hover effect
-    border-radius: 20px;
-  //  border: solid 1px #f0f0f0;
-    margin: 10px;
-    padding: 10px;
-    background-color: transparent;
-
-    &:hover {
-        color: var(--primary-color); // Change color on hover
-        text-decoration: underline; // Optional underline on hover
-        background-color: rgba(grey, 0.4); // Optional background color on hover
-        text-decoration: none;
-        transition: all 0.3s ease; // Smooth transition for hover effect
-        transform: matrix(1.05, 0, 0, 1.05, 0, 0); // Slightly scale up on hover
-        
+    color: var(--text-inverse);
+    font-size: var(--text-6xl);
+    font-weight: 800;
+    margin-bottom: var(--space-lg);
+    background: linear-gradient(135deg, var(--primary-color-light), var(--secondary-color));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: fadeInUp 1s ease-out 0.5s both;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    
+    @media (max-width: 768px) {
+      font-size: var(--text-4xl);
     }
     
+    @media (max-width: 480px) {
+      font-size: var(--text-3xl);
+    }
+}
+
+.subtitle {
+    color: var(--text-inverse);
+    font-size: var(--text-2xl);
+    font-weight: 300;
+    margin-bottom: var(--space-xl);
+    opacity: 0.95;
+    animation: fadeInUp 1s ease-out 0.7s both;
+    
+    @media (max-width: 768px) {
+      font-size: var(--text-xl);
+    }
+}
+
+.description {
+    color: var(--text-inverse);
+    font-size: var(--text-lg);
+    line-height: var(--leading-relaxed);
+    margin-bottom: var(--space-2xl);
+    opacity: 0.9;
+    animation: fadeInUp 1s ease-out 0.9s both;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.cta-buttons {
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    flex-wrap: wrap;
+    animation: fadeInUp 1s ease-out 1.1s both;
+    
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: center;
+      gap: var(--space-md);
+    }
+}
+
+.primary-btn {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-color-dark));
+    color: var(--text-inverse);
+    border: none;
+    padding: var(--space-lg) var(--space-2xl);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: var(--text-base);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    box-shadow: var(--shadow-lg);
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: left var(--transition-slow);
+    }
+    
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-xl);
+      
+      &::before {
+        left: 100%;
+      }
+    }
+    
+    &:active {
+      transform: translateY(-1px);
+    }
+    
+    i {
+      font-size: var(--text-lg);
+    }
+}
+
+.secondary-btn {
+    background: transparent;
+    color: var(--text-inverse);
+    border: 2px solid var(--text-inverse);
+    padding: var(--space-lg) var(--space-2xl);
+    border-radius: var(--border-radius);
+    font-weight: 600;
+    font-size: var(--text-base);
+    cursor: pointer;
+    transition: all var(--transition-normal);
+    backdrop-filter: blur(10px);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-sm);
+    
+    &:hover {
+      background: var(--text-inverse);
+      color: var(--text-primary);
+      transform: translateY(-3px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    i {
+      font-size: var(--text-lg);
+    }
+}
+
+/* --- Social Links --- */
+.social-links {
+    margin-top: var(--space-3xl);
+    display: flex;
+    gap: var(--space-lg);
+    justify-content: center;
+    animation: fadeInUp 1s ease-out 1.3s both;
+    
+    @media (max-width: 768px) {
+      gap: var(--space-md);
+      margin-top: var(--space-2xl);
+    }
+    
+    a {
+        color: var(--text-inverse);
+        text-decoration: none;
+        font-size: var(--text-xl);
+        padding: var(--space-md);
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        transition: all var(--transition-normal);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 64px;
+        height: 64px;
+        position: relative;
+        overflow: hidden;
+        
+        &::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: -100%;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+          transition: left var(--transition-slow);
+        }
+        
+        &:hover {
+            color: var(--primary-color-light);
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-4px) scale(1.1);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-color-light);
+            
+            &::before {
+              left: 100%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+          width: 56px;
+          height: 56px;
+          font-size: var(--text-lg);
+        }
+    }
+}
+
+/* --- Background Animation --- */
+@keyframes backgroundFloat {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  33% {
+    transform: translateY(-20px) rotate(1deg);
+  }
+  66% {
+    transform: translateY(10px) rotate(-1deg);
+  }
+}
+
+/* --- Video Background Element --- */
+.background-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  filter: brightness(0.7) contrast(1.1) saturate(0.8);
+}
+
+/* --- Responsive Design --- */
+@media (max-width: 768px) {
+  .content-wrapper {
+    padding: var(--space-2xl);
+    margin: var(--space-lg);
+  }
+  
+  .cta-buttons {
+    gap: var(--space-md);
+  }
+  
+  .primary-btn,
+  .secondary-btn {
+    padding: var(--space-md) var(--space-xl);
+    font-size: var(--text-sm);
+  }
+  
+  .social-links {
+    gap: var(--space-md);
+    
+    a {
+      width: 56px;
+      height: 56px;
+      font-size: var(--text-lg);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .content-wrapper {
+    padding: var(--space-xl);
+    margin: var(--space-md);
+  }
+  
+  .primary-btn,
+  .secondary-btn {
+    padding: var(--space-sm) var(--space-lg);
+    font-size: var(--text-sm);
+  }
 }
