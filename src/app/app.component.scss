@@ -1,4 +1,4 @@
-@import '../styles.scss'; // Import global styles for variables
+@use '../styles.scss' as *; // Import global styles for variables
 
 // Styles for the root app-root element 
 :host {

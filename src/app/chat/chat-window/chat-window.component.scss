@@ -1,4 +1,4 @@
-@import '../../../styles.scss'; // Import global styles
+@use '../../../styles.scss' as *; // Import global styles
 
 .chat-window-container {
     position: fixed; 

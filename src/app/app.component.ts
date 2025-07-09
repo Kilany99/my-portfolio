@@ -43,7 +43,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
 
   @ViewChildren('section.section-padding') sections!: QueryList<ElementRef>; 
 
-  private observer!: IntersectionObserver; 
+  private observer: IntersectionObserver | null = null; 
 
   isShowScrollToTop = false;
   private scrollThreshold = 300;
@@ -129,7 +129,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     // Start observing each section element
     this.sections.forEach(section => {
        console.log('Observing section:', section.nativeElement.id); // Optional log
-       this.observer.observe(section.nativeElement);
+       this.observer!.observe(section.nativeElement);
     });
   }
   // --------------------------------------------------
@@ -140,6 +140,7 @@ export class AppComponent implements AfterViewInit, OnDestroy {
       console.log('AppComponent ngOnDestroy - Disconnecting observer'); // Optional log
       if (this.observer) {
         this.observer.disconnect();
+        this.observer = null;
       }
     }
     // Clean up ScrollStateService subscription in HeaderComponent's ngOnDestroy

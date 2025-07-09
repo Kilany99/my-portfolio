@@ -1,4 +1,4 @@
-@import '../../../styles.scss'; // Import global styles for variables
+@use '../../../styles.scss' as *; // Import global styles for variables
 
 :host {
   display: flex; 
