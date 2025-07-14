@@ -137,3 +137,17 @@
     }
   }
 }
+
+app-chat-window {
+  position: fixed !important;
+  bottom: 90px !important; // Above the chat icon
+  right: 20px !important;
+  z-index: 10000 !important;
+  
+  @media (max-width: 600px) {
+    bottom: 0 !important;
+    right: 0 !important;
+    left: 0 !important;
+    top: 20% !important;
+  }
+}

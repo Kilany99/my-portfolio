@@ -9,9 +9,9 @@
 </main>
 
 <app-chat-icon></app-chat-icon>
-<app-chat-window *ngIf="(chatService.isChatOpen$ | async)"></app-chat-window> 
-
-
+<div *ngIf="chatService.isChatOpen$ | async" style="position: fixed; bottom: 90px; right: 20px; z-index: 10000;  padding: 10px;">
+  <app-chat-window></app-chat-window>
+</div>
 <app-footer></app-footer>
 
 <button class="scroll-to-top-button" [class.show]="isShowScrollToTop"  (click)="scrollToTop()"> 

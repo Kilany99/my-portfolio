@@ -52,7 +52,9 @@ export class AppComponent implements AfterViewInit, OnDestroy {
     private scrollStateService: ScrollStateService, 
     public chatService: ChatService,
     @Inject(PLATFORM_ID) private platformId: Object
-  ) {}
+  ) {
+    this.chatService.isChatOpen$.subscribe(val => console.log('AppComponent sees isChatOpen$', val));
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll(): void {

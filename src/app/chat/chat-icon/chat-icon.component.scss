@@ -2,41 +2,48 @@
 
 .chat-toggle-button {
     position: fixed;
-    bottom: var(--gap-md); 
-    left: var(--gap-lg); 
-    z-index: 1001;
+    bottom: 20px !important;
+    left: 20px !important;
+    right: auto !important;
+    z-index: 9999 !important;
     box-shadow: var(--base-shadow);
     border-radius: 40px;
     animation: pulse-zoom-fade 2s ease-in-out infinite alternate;
     background-color: var(--primary-color);
     color: var(--background-color);
-    width: 64px; // Default FAB size
+    width: 64px;
     height: 64px;
-    box-shadow: var(--hover-shadow); // Add shadow
+    box-shadow: var(--hover-shadow);
     transition: transform 0.3s ease;    
-
+    
     &:hover {
-        transform: scale(1.05); // Subtle hover effect
+        transform: scale(1.05);
     }
 }
-img {
-    width: 40px; // Adjust icon size
-    height: 40px;
+
+.chat-icon {
+    width: 40px !important;
+    height: 40px !important;
+    display: block !important;
 }
 
-
 .chat-icon-container {
-    position: fixed; // Make the container float
-    bottom: var(--gap-md); // Position from bottom
-    right: var(--gap-lg); // Position from right
-    z-index: 1001; // Ensure it's above most other content
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 20px !important;
+    right: auto !important;
+    z-index: 9999 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    cursor: pointer !important;
+    text-align: center !important;
+    min-width: 64px !important;
+    min-height: 64px !important;
+    width: auto !important;
+    height: auto !important;
+}
 
-    display: flex; // Use flexbox for layout
-    flex-direction: column; // Stack icon and text vertically
-    align-items: center; // Center horizontally
-    cursor: pointer; // Indicate it's clickable
-    text-align: center; 
-}   
 .chat-prompt-text {
     font-size: 0.9em; // Adjust text size
     color: var(--text-color); // Adjust text color to be visible

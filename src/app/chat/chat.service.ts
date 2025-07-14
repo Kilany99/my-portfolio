@@ -22,7 +22,7 @@ interface ChatResponse {
   providedIn: 'root',
 })
 export class ChatService {
-  private readonly baseUrl = 'https://192.168.43.144:45455/api/chat';
+  private readonly baseUrl = 'https://localhost:7220/api/chat';
 
   private isChatOpenSubject = new BehaviorSubject<boolean>(false);
   isChatOpen$ = this.isChatOpenSubject.asObservable();
@@ -44,9 +44,11 @@ export class ChatService {
   }
 
   toggleChat(): void {
-    this.isChatOpenSubject.next(!this.isChatOpenSubject.value);
+    console.log('Toggling chat. Current:', this.isChatOpenSubject.value);
+    const newValue = !this.isChatOpenSubject.value;
+    this.isChatOpenSubject.next(newValue);
+    console.log('New value set to:', newValue);
   }
-
   closeChat(): void {
     this.isChatOpenSubject.next(false);
   }
