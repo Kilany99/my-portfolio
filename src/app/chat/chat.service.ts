@@ -22,7 +22,7 @@ interface ChatResponse {
   providedIn: 'root',
 })
 export class ChatService {
-  private readonly baseUrl = 'https://localhost:7220/api/chat';
+  private readonly baseUrl = 'https://kilanychatbot.netlify.app/api/chat';
 
   private isChatOpenSubject = new BehaviorSubject<boolean>(false);
   isChatOpen$ = this.isChatOpenSubject.asObservable();
