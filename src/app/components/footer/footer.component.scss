@@ -74,7 +74,7 @@ footer {
         margin-bottom: var(--space-sm);
         
         a {
-          color: var(--text-muted);
+          color: #e2dfec;
           text-decoration: none;
           font-size: var(--text-sm);
           transition: all var(--transition-normal);
@@ -161,7 +161,7 @@ footer {
     animation: fadeInUp 0.8s ease-out 0.2s both;
     
     p {
-      color: var(--text-muted);
+      color: #e2dfec;
       font-size: var(--text-xs);
       margin: 0;
       
