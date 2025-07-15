@@ -1,16 +1,24 @@
-<header>
-  <div class="site-title">Abdalla Elkilany</div>
-
-  <button class="menu-toggle" (click)="toggleNav()">
-     <mat-icon *ngIf="!isNavOpen">menu</mat-icon> <mat-icon *ngIf="isNavOpen">close</mat-icon> </button>
-
-     <nav [class.is-open]="isNavOpen">
-      <ul>
-        <li><a href="#home" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'home'">Home</a></li>
-        <li><a href="#about" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'about'">About</a></li>
-        <li><a href="#skills" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'skills'">Skills</a></li>
-        <li><a href="#projects" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'projects'">Projects</a></li>
-        <li><a href="#contact" (click)="closeNav()" [class.is-active]="currentActiveSectionId === 'contact'">Contact</a></li>
-      </ul>
+<header class="main-navbar">
+  <div class="navbar-content">
+    <div class="navbar-brand">
+      <!-- <img src="https://cdn-icons-png.flaticon.com/512/726/726107.png" alt="Logo" class="logo" /> -->
+      <span class="brand-name">Abdalla Kilany</span>
+    </div>
+    <nav class="navbar-links" [class.open]="menuOpen">
+      <a *ngFor="let link of navLinks" [href]="link.path" (click)="closeMenu()">
+        {{ link.label }}
+        <span class="nav-underline"></span>
+      </a>
     </nav>
+    <div class="navbar-actions">
+      <!-- Dark mode toggle placeholder -->
+      <button class="dark-toggle" aria-label="Toggle dark mode" (click)="toggleDarkMode()">
+        <mat-icon *ngIf="!isDarkMode" class="icon-anim">dark_mode</mat-icon>
+        <mat-icon *ngIf="isDarkMode" class="icon-anim">light_mode</mat-icon>
+      </button>
+      <button class="hamburger" (click)="toggleMenu()" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
 </header>

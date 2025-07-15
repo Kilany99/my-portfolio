@@ -143,6 +143,44 @@ export class ProjectService {
       imageUrl: 'images/task-manager.jpg',
        screenshots: ['images/task-manager_ss1.jpg', 'images/task-manager_ss2.jpg'], 
        videoUrl: 'https://www.youtube.com/embed/YOUR_VIDEO_ID_4' 
+    },
+    {
+      id: 5,
+      name: 'Weather Forecast Web App',
+      description: `Modern weather forecast web application built with HTML, CSS, and JavaScript. Real-time data, interactive charts, and responsive design...`,
+      longDescription: `Weather Forecast is a modern web application that provides real-time weather updates, forecasts, and interactive visualizations for locations worldwide. The app features a clean, responsive UI, dynamic weather icons, and detailed hourly/daily forecasts. Users can search for any city, view temperature, humidity, wind, and precipitation data, and enjoy a seamless experience across devices.\n\nKey Features:\n- Real-time weather data from OpenWeatherMap API\n- 7-day and hourly forecasts with interactive charts\n- Search by city with autocomplete\n- Dynamic weather icons and backgrounds\n- Responsive, mobile-friendly design\n- Error handling for invalid locations\n- Light and dark mode support\n\nBuilt entirely with HTML, CSS, and JavaScript for maximum compatibility and performance.`,
+      technologies: [
+        'HTML',
+        'CSS',
+        'JavaScript',
+        'OpenWeatherMap API',
+        'Chart.js',
+        'Responsive Design'
+      ],
+      githubUrl: 'https://github.com/Kilany99/Weather-Forecast',
+      imageUrl: 'https://img.freepik.com/premium-vector/weather-infographic-line-climate-forecast-banner-with-rain-sunny-cold-day-elements-clouds-sky-moon-icons-precipitation-cloudiness-prediction-vector-meteorology-background_440128-757.jpg',
+      screenshots: ['images/weather-forecast-ss1.png', 'images/weather-forecast-ss2.png'], // <-- Add your own screenshots
+      videoUrl: '', // Optionally add a demo video
+      liveDemoUrl: 'https://kilany-forecast.netlify.app'
+    },
+    {
+      id: 6,
+      name: '8086 Microprocessor-Based Safe Lock System',
+      description: `Digital safe lock system using Intel 8086, 4x4 keypad, and 16x2 LCD. Pure assembly with advanced features...`,
+      longDescription: `A digital safe lock system implemented using an Intel 8086 Microprocessor, a 4x4 matrix keypad for input, and a 16x2 LCD for displaying status and feedback. This project demonstrates fundamental principles of embedded systems, assembly programming, and peripheral interfacing using the 8255 Programmable Peripheral Interface (PPI).\n\n✨ Features\n- 4-Digit Password Security: Users enter a 4-digit numeric password for access control.\n- Interactive Keypad Input: Utilizes a common 4x4 matrix keypad for user input.\n- LCD Display Interface: Provides clear visual feedback on a 16x2 LCD, displaying prompts like \"PASSWORD\", \"WRONG :(\", \"Correct :)\", \"New Password\", and \"Done\".\n- Configurable Password: The default password can be easily set within the assembly code's memory initializations.\n- Limited Access Attempts: Implements a security measure allowing a limited number of incorrect password attempts (3 tries) before locking out.\n- Password Change/Reset: After successful authentication, the system offers functionality to reset or change the current password.\n- Visual Feedback: Asterisks (*) are displayed for entered password digits, and specific messages indicate correct or incorrect attempts.\n- \"Appear\" Feature: A special key allows temporarily showing the entered password characters for verification.\n- \"Delete\" (Backspace) Feature: Allows correcting entered digits before confirmation.\n- \"Exit\" & \"Reset\" Functions: Special keys for resetting the system state or initiating a password change.\n- Door Lock Control (Implied): The system is designed to provide an output signal (e.g., to a relay) upon correct password entry, simulating the unlocking of a safe or door.\n- Pure 8086 Assembly: The entire system logic is implemented in low-level 8086 assembly language, offering deep insights into microprocessor programming.\n- 8255 PPI Interfacing: Leverages the 8255 PPI chip to manage communication with both the keypad (input) and the LCD (output).`,
+      technologies: [
+        '8086 Assembly',
+        'Intel 8086',
+        '4x4 Matrix Keypad',
+        '16x2 LCD',
+        '8255 PPI',
+        'Embedded Systems',
+        'Microprocessor Programming'
+      ],
+      githubUrl: 'https://github.com/Kilany99/Safe-Lock',
+      imageUrl: 'https://securamsys.com/cdn/shop/files/wifi-safe-lock-banner-for-shopify_cb632cc6-5c10-4b5a-83df-1695e0777959.jpg?v=1723149892&width=2800',
+      screenshots: ['images/safe-lock-ss1.png', 'images/safe-lock-ss2.png'], // <-- Add your own screenshots
+      videoUrl: '' // Optionally add a demo video
     }
   ];
 

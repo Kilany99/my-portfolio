@@ -33,15 +33,15 @@ html, body {
   
   /* --- Border & Shadow --- */
   --border-color: #e2e8f0;         /* Light Border */
-  --border-radius: 12px;           /* Modern Rounded Corners */
-  --border-radius-sm: 8px;
+  --border-radius: 8px;           /* Modern Rounded Corners */
+  --border-radius-sm: 4px;
   --border-radius-lg: 16px;
   
   /* --- Shadows --- */
   --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
-  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1);
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-xl: 0 8px 32px rgba(0,0,0,0.16);
   
   /* --- Spacing System --- */
   --space-xs: 4px;
@@ -57,21 +57,21 @@ html, body {
   --font-family-mono: 'JetBrains Mono', 'Fira Code', 'Monaco', 'Cascadia Code', monospace;
   
   /* --- Font Sizes --- */
-  --text-xs: 0.75rem;    /* 12px */
-  --text-sm: 0.875rem;   /* 14px */
-  --text-base: 1rem;     /* 16px */
-  --text-lg: 1.125rem;   /* 18px */
-  --text-xl: 1.25rem;    /* 20px */
-  --text-2xl: 1.5rem;    /* 24px */
-  --text-3xl: 1.875rem;  /* 30px */
-  --text-4xl: 2.25rem;   /* 36px */
+  --text-xs: 0.85rem;    /* 12px */
+  --text-sm: 1rem;   /* 14px */
+  --text-base: 1.1rem;     /* 16px */
+  --text-lg: 1.25rem;   /* 18px */
+  --text-xl: 1.5rem;    /* 20px */
+  --text-2xl: 2rem;    /* 24px */
+  --text-3xl: 2.5rem;  /* 30px */
+  --text-4xl: 3rem;   /* 36px */
   --text-5xl: 3rem;      /* 48px */
   --text-6xl: 3.75rem;   /* 60px */
   
   /* --- Line Heights --- */
-  --leading-tight: 1.25;
+  --leading-tight: 1.2;
   --leading-normal: 1.5;
-  --leading-relaxed: 1.75;
+  --leading-relaxed: 1.6;
   
   /* --- Transitions --- */
   --transition-fast: 150ms ease-out;
@@ -86,6 +86,42 @@ html, body {
   /* --- Overlays --- */
   --overlay-dark: rgba(0, 0, 0, 0.6);
   --overlay-light: rgba(255, 255, 255, 0.8);
+
+  /* Spacing */
+  --space-xs: 4px;
+  --space-sm: 8px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 32px;
+  --space-2xl: 48px;
+  --space-3xl: 64px;
+
+  /* Border Radius */
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --border-radius-lg: 16px;
+
+  /* Shadows */
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.08);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.12);
+  --shadow-xl: 0 8px 32px rgba(0,0,0,0.16);
+
+  /* Typography */
+  --text-xs: 0.85rem;
+  --text-sm: 1rem;
+  --text-base: 1.1rem;
+  --text-lg: 1.25rem;
+  --text-xl: 1.5rem;
+  --text-2xl: 2rem;
+  --text-3xl: 2.5rem;
+  --text-4xl: 3rem;
+  --leading-tight: 1.2;
+  --leading-relaxed: 1.6;
+
+  /* Button */
+  --button-padding: var(--space-sm) var(--space-lg);
+  --button-radius: var(--border-radius);
+  --button-font-weight: 600;
 }
 
 /* --- Body and Layout --- */
@@ -98,6 +134,23 @@ body {
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+body.dark-mode {
+  --background-color: #181a23;
+  --surface-color: #23263a;
+  --alternate-background: #23263a;
+  --primary-color: #232b3b;
+  --primary-color-light: #3b4a6b;
+  --primary-color-dark: #fff;
+  --secondary-color: #06b6d4;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-inverse: #fff;
+  --border-color: #334155;
+  --shadow-md: 0 2px 8px rgba(0,0,0,0.32);
+  --shadow-lg: 0 4px 16px rgba(0,0,0,0.38);
+  --shadow-xl: 0 8px 32px rgba(0,0,0,0.44);
 }
 
 main {
@@ -231,6 +284,21 @@ button {
     transform: translateY(0);
     box-shadow: var(--shadow-md);
   }
+}
+
+button, .mat-mdc-button-base, .project-link {
+  transition: background 0.2s, color 0.2s, box-shadow 0.2s, border 0.2s;
+  outline: none;
+}
+
+button:focus, .mat-mdc-button-base:focus, .project-link:focus {
+  outline: 2px solid var(--primary-color, #6366f1);
+  outline-offset: 2px;
+}
+
+button:hover, .mat-mdc-button-base:hover, .project-link:hover {
+  box-shadow: var(--shadow-md);
+  filter: brightness(1.05);
 }
 
 /* --- Modern Card Styles --- */

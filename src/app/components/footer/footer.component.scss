@@ -59,7 +59,7 @@ footer {
     }
     
     p {
-      color: var(--text-muted);
+      // color: var(--text-muted);
       font-size: var(--text-sm);
       line-height: var(--leading-relaxed);
       margin-bottom: var(--space-md);
@@ -208,4 +208,20 @@ footer {
       }
     }
   }
+}
+
+:host {
+  display: block;
+  width: 100%;
+  background: var(--background-color);
+  border-top: 1px solid var(--border-color);
+  padding: var(--space-lg) 0;
+  text-align: center;
+  color: #111;
+  font-size: var(--text-sm);
+  letter-spacing: 0.5px;
+}
+
+body.dark-mode :host {
+  color: #111;
 }

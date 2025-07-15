@@ -25,6 +25,32 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isNavOpen = false;
   currentActiveSectionId: string = 'home'; // Initialize to 'home'
 
+  navLinks = [
+    { label: 'Home', path: '#home' },
+    { label: 'About', path: '#about' },
+    { label: 'Skills', path: '#skills' },
+    { label: 'Projects', path: '#projects' },
+    { label: 'Contact', path: '#contact' }
+  ];
+  menuOpen = false;
+  isDarkMode = false;
+
+  toggleMenu() {
+    this.menuOpen = !this.menuOpen;
+  }
+
+  closeMenu() {
+    this.menuOpen = false;
+  }
+
+  toggleDarkMode() {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
+      document.body.classList.add('dark-mode');
+    } else {
+      document.body.classList.remove('dark-mode');
+    }
+  }
 
   constructor(private scrollStateService: ScrollStateService) { }
 
